@@ -16,7 +16,7 @@ var COMMENTS_NAMES = [
   'Ирина',
   'Василий',
   'Яков',
-  'Бегемот'
+  'Петр'
 ];
 
 var pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
