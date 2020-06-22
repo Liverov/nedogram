@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var PHOTOS_QUANTITY = 25;
 var COMMENTS_MESSAGES = [
@@ -23,6 +23,8 @@ var pictureTemplate = document.querySelector('#picture').content.querySelector('
 var pictures = document.querySelector('.pictures');
 var arrPhotos = generatePhotos(PHOTOS_QUANTITY);
 var fragment = document.createDocumentFragment();
+var bigPicture = document.querySelector('.big-picture');
+
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);
@@ -32,7 +34,7 @@ function getRandomInt(min, max) {
 
 function generatePhotos(num) {
   var photos = [];
-  for(var i = 0; i < num; i++) {
+  for (var i = 0; i < num; i++) {
     photos[i] = {
       'url': 'photos/' + (i + 1) + '.jpg',
       'description': 'Описание к фотографии #' + i,
@@ -46,7 +48,7 @@ function generatePhotos(num) {
 
 function generateComments(num) {
   var comments = [];
-  for(var i = 0; i < num; i++) {
+  for (var i = 0; i < num; i++) {
     comments[i] = {
       avatar: 'img/avatar-' + getRandomInt(1, 6) + '.svg',
       message: COMMENTS_MESSAGES[getRandomInt(0, 5)],
@@ -73,3 +75,38 @@ for (var i = 0; i < arrPhotos.length; i++) {
   fragment.appendChild(renderPhotos(arrPhotos[i]));
 }
 pictures.appendChild(fragment);
+
+// Временное решение
+bigPicture.classList.remove('hidden');
+
+// Рендер большого фото первым элементом массива
+renderBigPhoto(arrPhotos[0]);
+function renderBigPhoto(photo) {
+  var bigPicImg = bigPicture.querySelector('.big-picture__img');
+  var bigPicLikes = bigPicture.querySelector('.likes-count');
+  var bigPicComments = bigPicture.querySelector('.comments-count');
+  var bigPicSocialComments = bigPicture.querySelector('.social__comments');
+  var bigPicDescription = bigPicture.querySelector('.social__caption');
+
+  bigPicImg.querySelector('img').src = photo.url;
+  bigPicLikes.textContent = photo.likes;
+  bigPicComments.textContent = photo.comments.length;
+
+
+  for (var j = 0; j < photo.comments.length; j++) {
+    var li = bigPicSocialComments.querySelector('li');
+    var img = li.querySelector('img');
+    img.src = photo.comments[j].avatar;
+    img.alt = photo.comments[j].name;
+    var commentMessage = li.querySelector('.social__text');
+    commentMessage.textContent = photo.comments[j].message;
+    bigPicSocialComments.appendChild(li);
+  }
+
+  bigPicDescription.textContent = photo.description;
+
+}
+
+document.querySelector('.social__comment-count').classList.add('hidden');
+document.querySelector('.comments-loader').classList.add('hidden');
+document.querySelector('body').classList.add('modal-open');
