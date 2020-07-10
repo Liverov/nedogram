@@ -25,14 +25,26 @@ var arrPhotos = generatePhotos(PHOTOS_QUANTITY);
 var fragment = document.createDocumentFragment();
 var bigPicture = document.querySelector('.big-picture');
 
+var imgPreview = pictures.querySelector('.img-upload__preview');
+var uploadFile = pictures.querySelector('#upload-file');
+var uploadOverlay = pictures.querySelector('.img-upload__overlay');
+var uploadCancel = pictures.querySelector('#upload-cancel');
 
-function getRandomInt(min, max) {
+var scaleSmaller = document.querySelector(".scale__control--smaller");
+var scaleBigger = document.querySelector(".scale__control--bigger");
+var scaleValue = document.querySelector(".scale__control--value");
+
+var effects = uploadOverlay.querySelector('.effects'); // Fieldset
+var effectLevel = uploadOverlay.querySelector('.img-upload__effect-level');
+var effectLevelPin = document.querySelector('.effect-level__pin');
+
+function getRandomInt (min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+};
 
-function generatePhotos(num) {
+function generatePhotos (num) {
   var photos = [];
   for (var i = 0; i < num; i++) {
     photos[i] = {
@@ -44,9 +56,9 @@ function generatePhotos(num) {
   }
 
   return photos;
-}
+};
 
-function generateComments(num) {
+function generateComments (num) {
   var comments = [];
   for (var i = 0; i < num; i++) {
     comments[i] = {
@@ -57,7 +69,7 @@ function generateComments(num) {
   }
 
   return comments;
-}
+};
 
 function renderPhotos(photo) {
   var photoElement = pictureTemplate.cloneNode(true);
@@ -76,12 +88,10 @@ for (var i = 0; i < arrPhotos.length; i++) {
 }
 pictures.appendChild(fragment);
 
-// Временное решение
-bigPicture.classList.remove('hidden');
-
 // Рендер большого фото первым элементом массива
 renderBigPhoto(arrPhotos[0]);
-function renderBigPhoto(photo) {
+
+function renderBigPhoto (photo) {
   var bigPicImg = bigPicture.querySelector('.big-picture__img');
   var bigPicLikes = bigPicture.querySelector('.likes-count');
   var bigPicComments = bigPicture.querySelector('.comments-count');
@@ -105,8 +115,80 @@ function renderBigPhoto(photo) {
 
   bigPicDescription.textContent = photo.description;
 
+};
+
+function closeEscModal (evt) {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    uploadOverlay.classList.add('hidden');
+    uploadFile.value = '';
+  }
+};
+
+function closeModal () {
+  uploadOverlay.classList.add('hidden');
+  document.removeEventListener('keydown', closeEscModal);
+};
+
+function openModal () {
+  document.querySelector('body').classList.add('modal-open');
+  uploadOverlay.classList.remove('hidden');
+  document.addEventListener('keydown', closeEscModal);
+};
+
+uploadFile.addEventListener('change', function () {
+  // document.querySelector('.social__comment-count').classList.add('hidden');
+  // document.querySelector('.comments-loader').classList.add('hidden');
+  openModal();
+});
+
+uploadCancel.addEventListener('click', function () {
+  closeModal();
+});
+
+uploadCancel.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    closeModal();
+  }
+});
+
+function scaleControls () {
+  var scale = 100;
+  scaleValue.value = scale + '%';
+  
+  scaleSmaller.addEventListener('click', function () {
+    if(scale > 25) {
+      scale -= 25;
+      var scaleSumm = scale / 100;
+      imgPreview.style = 'transform: scale(' + scaleSumm + ')';
+      scaleValue.value = scale + '%';
+    }
+  });
+
+  scaleBigger.addEventListener('click', function () {
+    if(scale < 100) {
+      scale += 25;
+      var scaleSumm = scale / 100;
+      imgPreview.style = 'transform: scale(' + scaleSumm + ')';
+      scaleValue.value = scale + '%';
+    }
+  });
 }
 
-document.querySelector('.social__comment-count').classList.add('hidden');
-document.querySelector('.comments-loader').classList.add('hidden');
-document.querySelector('body').classList.add('modal-open');
+function effectChangeHandler (evt) {
+  imgPreview.setAttribute('class', '');
+  imgPreview.classList.add('effects__preview--' + evt.target.value);
+
+  if (evt.target.value === 'none') {
+    effectLevel.classList.add('hidden');
+  } else {
+    effectLevel.classList.remove('hidden');
+  }
+}
+
+scaleControls();
+effects.addEventListener('change', effectChangeHandler);
+
+// effectLevelPin.addEventListener('mouseup', function () {
+// alert('pin');
+// });
