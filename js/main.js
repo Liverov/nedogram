@@ -47,12 +47,12 @@ function getRandomInt(min, max) {
 function generatePhotos(num) {
   var photos = [];
   for (var i = 0; i < num; i++) {
-    photos[i] = {
+    photos.push({
       'url': 'photos/' + (i + 1) + '.jpg',
       'description': 'Описание к фотографии #' + i,
       'likes': getRandomInt(15, 200),
       'comments': generateComments(getRandomInt(1, 4))
-    };
+    });
   }
 
   return photos;
