@@ -30,21 +30,21 @@ var uploadFile = pictures.querySelector('#upload-file');
 var uploadOverlay = pictures.querySelector('.img-upload__overlay');
 var uploadCancel = pictures.querySelector('#upload-cancel');
 
-var scaleSmaller = document.querySelector(".scale__control--smaller");
-var scaleBigger = document.querySelector(".scale__control--bigger");
-var scaleValue = document.querySelector(".scale__control--value");
+var scaleSmaller = document.querySelector('.scale__control--smaller');
+var scaleBigger = document.querySelector('.scale__control--bigger');
+var scaleValue = document.querySelector('.scale__control--value');
 
 var effects = uploadOverlay.querySelector('.effects'); // Fieldset
 var effectLevel = uploadOverlay.querySelector('.img-upload__effect-level');
 var effectLevelPin = document.querySelector('.effect-level__pin');
 
-function getRandomInt (min, max) {
+function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
-};
+}
 
-function generatePhotos (num) {
+function generatePhotos(num) {
   var photos = [];
   for (var i = 0; i < num; i++) {
     photos[i] = {
@@ -56,9 +56,9 @@ function generatePhotos (num) {
   }
 
   return photos;
-};
+}
 
-function generateComments (num) {
+function generateComments(num) {
   var comments = [];
   for (var i = 0; i < num; i++) {
     comments[i] = {
@@ -69,7 +69,7 @@ function generateComments (num) {
   }
 
   return comments;
-};
+}
 
 function renderPhotos(photo) {
   var photoElement = pictureTemplate.cloneNode(true);
@@ -91,7 +91,7 @@ pictures.appendChild(fragment);
 // Рендер большого фото первым элементом массива
 renderBigPhoto(arrPhotos[0]);
 
-function renderBigPhoto (photo) {
+function renderBigPhoto(photo) {
   var bigPicImg = bigPicture.querySelector('.big-picture__img');
   var bigPicLikes = bigPicture.querySelector('.likes-count');
   var bigPicComments = bigPicture.querySelector('.comments-count');
@@ -115,26 +115,26 @@ function renderBigPhoto (photo) {
 
   bigPicDescription.textContent = photo.description;
 
-};
+}
 
-function closeEscModal (evt) {
+function closeEscModal(evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
     uploadOverlay.classList.add('hidden');
     uploadFile.value = '';
   }
-};
+}
 
-function closeModal () {
+function closeModal() {
   uploadOverlay.classList.add('hidden');
   document.removeEventListener('keydown', closeEscModal);
-};
+}
 
-function openModal () {
+function openModal() {
   document.querySelector('body').classList.add('modal-open');
   uploadOverlay.classList.remove('hidden');
   document.addEventListener('keydown', closeEscModal);
-};
+}
 
 uploadFile.addEventListener('change', function () {
   // document.querySelector('.social__comment-count').classList.add('hidden');
@@ -152,12 +152,12 @@ uploadCancel.addEventListener('keydown', function (evt) {
   }
 });
 
-function scaleControls () {
+function scaleControls() {
   var scale = 100;
   scaleValue.value = scale + '%';
-  
+
   scaleSmaller.addEventListener('click', function () {
-    if(scale > 25) {
+    if (scale > 25) {
       scale -= 25;
       var scaleSumm = scale / 100;
       imgPreview.style = 'transform: scale(' + scaleSumm + ')';
@@ -166,7 +166,7 @@ function scaleControls () {
   });
 
   scaleBigger.addEventListener('click', function () {
-    if(scale < 100) {
+    if (scale < 100) {
       scale += 25;
       var scaleSumm = scale / 100;
       imgPreview.style = 'transform: scale(' + scaleSumm + ')';
@@ -175,7 +175,7 @@ function scaleControls () {
   });
 }
 
-function effectChangeHandler (evt) {
+function effectChangeHandler(evt) {
   imgPreview.setAttribute('class', '');
   imgPreview.classList.add('effects__preview--' + evt.target.value);
 
@@ -189,6 +189,6 @@ function effectChangeHandler (evt) {
 scaleControls();
 effects.addEventListener('change', effectChangeHandler);
 
-// effectLevelPin.addEventListener('mouseup', function () {
-// alert('pin');
-// });
+effectLevelPin.addEventListener('mouseup', function () {
+
+});
