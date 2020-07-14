@@ -1,5 +1,8 @@
 'use strict';
 
+var ESCAPE = 'Escape';
+var ENTER = 'Enter';
+
 var PHOTOS_QUANTITY = 25;
 var COMMENTS_MESSAGES = [
   'Всё отлично!',
@@ -25,6 +28,18 @@ var arrPhotos = generatePhotos(PHOTOS_QUANTITY);
 var fragment = document.createDocumentFragment();
 var bigPicture = document.querySelector('.big-picture');
 
+var imgPreview = pictures.querySelector('.img-upload__preview');
+var uploadFile = pictures.querySelector('#upload-file');
+var uploadOverlay = pictures.querySelector('.img-upload__overlay');
+var uploadCancel = pictures.querySelector('#upload-cancel');
+
+var scaleSmaller = document.querySelector('.scale__control--smaller');
+var scaleBigger = document.querySelector('.scale__control--bigger');
+var scaleValue = document.querySelector('.scale__control--value');
+
+var effects = uploadOverlay.querySelector('.effects'); // Fieldset
+var effectLevel = uploadOverlay.querySelector('.img-upload__effect-level');
+var effectLevelPin = document.querySelector('.effect-level__pin');
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);
@@ -35,12 +50,12 @@ function getRandomInt(min, max) {
 function generatePhotos(num) {
   var photos = [];
   for (var i = 0; i < num; i++) {
-    photos[i] = {
+    photos.push({
       'url': 'photos/' + (i + 1) + '.jpg',
       'description': 'Описание к фотографии #' + i,
       'likes': getRandomInt(15, 200),
       'comments': generateComments(getRandomInt(1, 4))
-    };
+    });
   }
 
   return photos;
@@ -76,11 +91,9 @@ for (var i = 0; i < arrPhotos.length; i++) {
 }
 pictures.appendChild(fragment);
 
-// Временное решение
-bigPicture.classList.remove('hidden');
-
 // Рендер большого фото первым элементом массива
 renderBigPhoto(arrPhotos[0]);
+
 function renderBigPhoto(photo) {
   var bigPicImg = bigPicture.querySelector('.big-picture__img');
   var bigPicLikes = bigPicture.querySelector('.likes-count');
@@ -107,6 +120,79 @@ function renderBigPhoto(photo) {
 
 }
 
-document.querySelector('.social__comment-count').classList.add('hidden');
-document.querySelector('.comments-loader').classList.add('hidden');
-document.querySelector('body').classList.add('modal-open');
+function closeEscModal(evt) {
+  if (evt.key === ESCAPE) {
+    evt.preventDefault();
+    uploadOverlay.classList.add('hidden');
+    uploadFile.value = '';
+  }
+}
+
+function closeModal() {
+  uploadOverlay.classList.add('hidden');
+  document.removeEventListener('keydown', closeEscModal);
+}
+
+function openModal() {
+  document.querySelector('body').classList.add('modal-open');
+  uploadOverlay.classList.remove('hidden');
+  document.addEventListener('keydown', closeEscModal);
+}
+
+uploadFile.addEventListener('change', function () {
+  // document.querySelector('.social__comment-count').classList.add('hidden');
+  // document.querySelector('.comments-loader').classList.add('hidden');
+  openModal();
+});
+
+uploadCancel.addEventListener('click', function () {
+  closeModal();
+});
+
+uploadCancel.addEventListener('keydown', function (evt) {
+  if (evt.key === ENTER) {
+    closeModal();
+  }
+});
+
+function scaleControls() {
+  var scale = 100;
+  var scaleStep = 25;
+  scaleValue.value = scale + '%';
+
+  scaleSmaller.addEventListener('click', function () {
+    if (scale - scaleStep >= scaleStep) {
+      scale -= scaleStep;
+      var scaleSumm = scale / 100;
+      imgPreview.style = 'transform: scale(' + scaleSumm + ')';
+      scaleValue.value = scale + '%';
+    }
+  });
+
+  scaleBigger.addEventListener('click', function () {
+    if (scale < 100) {
+      scale += scaleStep;
+      var scaleSumm = scale / 100;
+      imgPreview.style = 'transform: scale(' + scaleSumm + ')';
+      scaleValue.value = scale + '%';
+    }
+  });
+}
+
+function effectChangeHandler(evt) {
+  imgPreview.setAttribute('class', '');
+  imgPreview.classList.add('effects__preview--' + evt.target.value);
+
+  if (evt.target.value === 'none') {
+    effectLevel.classList.add('hidden');
+  } else {
+    effectLevel.classList.remove('hidden');
+  }
+}
+
+scaleControls();
+effects.addEventListener('change', effectChangeHandler);
+
+effectLevelPin.addEventListener('mouseup', function () {
+
+});
