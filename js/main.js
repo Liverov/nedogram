@@ -1,5 +1,8 @@
 'use strict';
 
+var ESCAPE = 'Escape';
+var ENTER = 'Enter';
+
 var PHOTOS_QUANTITY = 25;
 var COMMENTS_MESSAGES = [
   'Всё отлично!',
@@ -118,7 +121,7 @@ function renderBigPhoto(photo) {
 }
 
 function closeEscModal(evt) {
-  if (evt.key === 'Escape') {
+  if (evt.key === ESCAPE) {
     evt.preventDefault();
     uploadOverlay.classList.add('hidden');
     uploadFile.value = '';
@@ -147,18 +150,19 @@ uploadCancel.addEventListener('click', function () {
 });
 
 uploadCancel.addEventListener('keydown', function (evt) {
-  if (evt.key === 'Enter') {
+  if (evt.key === ENTER) {
     closeModal();
   }
 });
 
 function scaleControls() {
   var scale = 100;
+  var scaleStep = 25;
   scaleValue.value = scale + '%';
 
   scaleSmaller.addEventListener('click', function () {
-    if (scale > 25) {
-      scale -= 25;
+    if (scale - scaleStep >= scaleStep) {
+      scale -= scaleStep;
       var scaleSumm = scale / 100;
       imgPreview.style = 'transform: scale(' + scaleSumm + ')';
       scaleValue.value = scale + '%';
@@ -167,7 +171,7 @@ function scaleControls() {
 
   scaleBigger.addEventListener('click', function () {
     if (scale < 100) {
-      scale += 25;
+      scale += scaleStep;
       var scaleSumm = scale / 100;
       imgPreview.style = 'transform: scale(' + scaleSumm + ')';
       scaleValue.value = scale + '%';
