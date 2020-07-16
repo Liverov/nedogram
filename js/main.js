@@ -27,6 +27,7 @@ var pictures = document.querySelector('.pictures');
 var arrPhotos = generatePhotos(PHOTOS_QUANTITY);
 var fragment = document.createDocumentFragment();
 var bigPicture = document.querySelector('.big-picture');
+var bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 
 var imgPreview = pictures.querySelector('.img-upload__preview');
 var uploadFile = pictures.querySelector('#upload-file');
@@ -86,13 +87,14 @@ function renderPhotos(photo) {
   return photoElement;
 }
 
-for (var i = 0; i < arrPhotos.length; i++) {
-  fragment.appendChild(renderPhotos(arrPhotos[i]));
+function fragmentRenderPhoto() {
+  for (var i = 0; i < arrPhotos.length; i++) {
+    fragment.appendChild(renderPhotos(arrPhotos[i]));
+  }
+  pictures.appendChild(fragment);
 }
-pictures.appendChild(fragment);
 
-// Рендер большого фото первым элементом массива
-renderBigPhoto(arrPhotos[0]);
+fragmentRenderPhoto();
 
 function renderBigPhoto(photo) {
   var bigPicImg = bigPicture.querySelector('.big-picture__img');
@@ -117,8 +119,47 @@ function renderBigPhoto(photo) {
   }
 
   bigPicDescription.textContent = photo.description;
+}
+
+// Клик по превьюшкам для показа больших фото
+var thumbnails = pictures.querySelectorAll('.picture');
+function elCreator(element, data) {
+  element.addEventListener('click', function () {
+    bigPicture.classList.remove('hidden');
+    renderBigPhoto(data);
+  });
+  element.addEventListener('keydown', function (evt) {
+    if (evt.key === ENTER) {
+      evt.preventDefault();
+      bigPicture.classList.remove('hidden');
+      renderBigPhoto(data);
+    }
+  });
 
 }
+function previewThumbnails() {
+  for (var i = 0; i < thumbnails.length; i++) {
+    elCreator(thumbnails[i], arrPhotos[i]);
+  }
+}
+previewThumbnails();
+
+function closeBigPhoto() {
+  bigPicture.classList.add('hidden');
+}
+bigPictureCancel.addEventListener('click', closeBigPhoto);
+
+function closeEscBigPhoto(evt) {
+  if (evt.key === ESCAPE) {
+    evt.preventDefault();
+    bigPicture.classList.add('hidden');
+    document.addEventListener('keydown', closeEscModal);
+  }
+}
+document.addEventListener('keydown', function (evt) {
+  closeEscBigPhoto(evt);
+});
+
 
 function closeEscModal(evt) {
   if (evt.key === ESCAPE) {
