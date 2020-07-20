@@ -203,46 +203,42 @@ uploadCancel.addEventListener('keydown', function (evt) {
 });
 
 function checkHashtags() {
-  textHashtags.addEventListener("input", function() {
-      var hashTagRegExp = /^#[a-zа-яA-ZА-Я0-9]{1,19}$/;
-      var hashTagsErrorCount = 0;
-      var tag = textHashtags.value.trim();
-      var hashTagsArray = tag.split(" ");
-      if (tag) {
-          for (var i = 0; i < hashTagsArray.length; i++) {
-              if (!hashTagRegExp.test(hashTagsArray[i])) {
-                  hashTagsErrorCount++;
-              }
-          }
+  textHashtags.addEventListener('input', function () {
+    var hashTagRegExp = /^#[a-zа-яA-ZА-Я0-9]{1,19}$/;
+    var hashTagsErrorCount = 0;
+    var tag = textHashtags.value.trim();
+    var hashTagsArray = tag.split(' ');
+    if (tag) {
+      for (var i = 0; i < hashTagsArray.length; i++) {
+        if (!hashTagRegExp.test(hashTagsArray[i])) {
+          hashTagsErrorCount++;
+        }
       }
-      if (hashTagsErrorCount) {
-          textHashtags.setCustomValidity(
-              "Исправьте ошибки в " + hashTagsErrorCount + " хэштеге"
-          );
-          textHashtags.reportValidity();
-      } else if (hashTagsArray.length > 5) {
-          textHashtags.setCustomValidity("Не больше 5 хештегов");
-          textHashtags.reportValidity();
-      } else {
-          textHashtags.setCustomValidity("");
-      }
+    }
+    if (hashTagsErrorCount) {
+      textHashtags.setCustomValidity('Исправьте ошибки в ' + hashTagsErrorCount + ' хэштеге');
+      textHashtags.reportValidity();
+    } else if (hashTagsArray.length > 5) {
+      textHashtags.setCustomValidity('Не больше 5 хештегов');
+      textHashtags.reportValidity();
+    } else {
+      textHashtags.setCustomValidity('');
+    }
   });
-};
+}
 
 checkHashtags();
 
 function checkComments() {
-  textComments.addEventListener("input", function() {
-      if (textComments.value.length > 140) {
-          textComments.setCustomValidity(
-              "Ваш комментарий больше 140 символов"
-          );
-          textComments.reportValidity();
-      } else {
-          textComments.setCustomValidity("");
-      }
+  textComments.addEventListener('input', function () {
+    if (textComments.value.length > 140) {
+      textComments.setCustomValidity('Ваш комментарий больше 140 символов');
+      textComments.reportValidity();
+    } else {
+      textComments.setCustomValidity('');
+    }
   });
-};
+}
 
 checkComments();
 
