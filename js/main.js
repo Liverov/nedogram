@@ -34,6 +34,10 @@ var uploadFile = pictures.querySelector('#upload-file');
 var uploadOverlay = pictures.querySelector('.img-upload__overlay');
 var uploadCancel = pictures.querySelector('#upload-cancel');
 
+var textHashtags = document.querySelector('.text__hashtags');
+
+var textComments = document.querySelector('.social__footer-text');
+
 var scaleSmaller = document.querySelector('.scale__control--smaller');
 var scaleBigger = document.querySelector('.scale__control--bigger');
 var scaleValue = document.querySelector('.scale__control--value');
@@ -137,17 +141,16 @@ function elCreator(element, data) {
   });
 
 }
+
 function previewThumbnails() {
   for (var i = 0; i < thumbnails.length; i++) {
     elCreator(thumbnails[i], arrPhotos[i]);
   }
 }
-previewThumbnails();
 
 function closeBigPhoto() {
   bigPicture.classList.add('hidden');
 }
-bigPictureCancel.addEventListener('click', closeBigPhoto);
 
 function closeEscBigPhoto(evt) {
   if (evt.key === ESCAPE) {
@@ -156,6 +159,9 @@ function closeEscBigPhoto(evt) {
     document.addEventListener('keydown', closeEscModal);
   }
 }
+
+previewThumbnails();
+bigPictureCancel.addEventListener('click', closeBigPhoto);
 document.addEventListener('keydown', function (evt) {
   closeEscBigPhoto(evt);
 });
@@ -195,6 +201,50 @@ uploadCancel.addEventListener('keydown', function (evt) {
     closeModal();
   }
 });
+
+function checkHashtags() {
+  textHashtags.addEventListener("input", function() {
+      var hashTagRegExp = /^#[a-zа-яA-ZА-Я0-9]{1,19}$/;
+      var hashTagsErrorCount = 0;
+      var tag = textHashtags.value.trim();
+      var hashTagsArray = tag.split(" ");
+      if (tag) {
+          for (var i = 0; i < hashTagsArray.length; i++) {
+              if (!hashTagRegExp.test(hashTagsArray[i])) {
+                  hashTagsErrorCount++;
+              }
+          }
+      }
+      if (hashTagsErrorCount) {
+          textHashtags.setCustomValidity(
+              "Исправьте ошибки в " + hashTagsErrorCount + " хэштеге"
+          );
+          textHashtags.reportValidity();
+      } else if (hashTagsArray.length > 5) {
+          textHashtags.setCustomValidity("Не больше 5 хештегов");
+          textHashtags.reportValidity();
+      } else {
+          textHashtags.setCustomValidity("");
+      }
+  });
+};
+
+checkHashtags();
+
+function checkComments() {
+  textComments.addEventListener("input", function() {
+      if (textComments.value.length > 140) {
+          textComments.setCustomValidity(
+              "Ваш комментарий больше 140 символов"
+          );
+          textComments.reportValidity();
+      } else {
+          textComments.setCustomValidity("");
+      }
+  });
+};
+
+checkComments();
 
 function scaleControls() {
   var scale = 100;
