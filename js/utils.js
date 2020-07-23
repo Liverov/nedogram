@@ -1,19 +1,18 @@
-(function (){
+'use strict';
+
+(function () {
   var ESCAPE_KEYCODE = 27;
   var ENTER_KEYCODE = 13;
 
-  
   window.utils = {
     isEscEvent: function (evt, action) {
-      if(evt.keyCode === ESCAPE_KEYCODE) {
-        console.log('Pressed esc');
+      if (evt.keyCode === ESCAPE_KEYCODE) {
         evt.preventDefault();
         action();
       }
     },
     isEnterEvent: function (evt, action) {
-      if(evt.keyCode === ENTER_KEYCODE) {
-        console.log('Pressed enter');
+      if (evt.keyCode === ENTER_KEYCODE) {
         evt.preventDefault();
         action();
       }

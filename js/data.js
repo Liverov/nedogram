@@ -1,4 +1,6 @@
-(function(){
+'use strict';
+
+(function () {
   var COMMENTS_MESSAGES = [
     'Всё отлично!',
     'В целом всё неплохо. Но не всё.',
@@ -19,7 +21,7 @@
 
   window.data = {
     PHOTOS_QUANTITY: 25,
-    generatePhotos: function(num) {
+    generatePhotos: function (num) {
       var photos = [];
       for (var i = 0; i < num; i++) {
         photos.push({
@@ -31,7 +33,7 @@
       }
       return photos;
     },
-    generateComments: function(num) {
+    generateComments: function (num) {
       var comments = [];
       for (var i = 0; i < num; i++) {
         comments[i] = {
@@ -40,9 +42,8 @@
           name: COMMENTS_NAMES[window.utils.generateRandomInt(0, 6)]
         };
       }
-    
+
       return comments;
     }
   };
-  
 })();

@@ -1,4 +1,6 @@
-(function(){
+'use strict';
+
+(function () {
   var arrPhotos = window.data.generatePhotos(window.data.PHOTOS_QUANTITY);
   var pictures = document.querySelector('.pictures');
   var bigPicture = document.querySelector('.big-picture');

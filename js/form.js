@@ -1,5 +1,6 @@
-(function() {
-  
+'use strict';
+
+(function () {
   var textHashtags = document.querySelector('.text__hashtags');
   var textComments = document.querySelector('.social__footer-text');
 
@@ -27,7 +28,7 @@
     }
   });
 
-  //checkComments
+  // checkComments
   textComments.addEventListener('input', function () {
     if (textComments.value.length > 140) {
       textComments.setCustomValidity('Ваш комментарий больше 140 символов');
