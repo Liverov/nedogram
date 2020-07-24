@@ -5,7 +5,7 @@
   var pictures = document.querySelector('.pictures');
   var bigPicture = document.querySelector('.big-picture');
   var thumbnails = pictures.querySelectorAll('.picture');
-
+ 
   window.preview = {
     openBigPicture: function (element, data) {
       element.addEventListener('click', function () {

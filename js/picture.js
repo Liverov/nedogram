@@ -10,7 +10,7 @@
   window.picture = {
     renderPhotos: function (photo) {
       var photoElement = pictureTemplate.cloneNode(true);
-      var photoImg = photoElement.querySelector('img');
+      var photoImg = photoElement.querySelector('.picture__img');
       var photoLikes = photoElement.querySelector('.picture__likes');
       var photoComments = photoElement.querySelector('.picture__comments');
 
@@ -50,12 +50,13 @@
   };
 
   // fragmentRenderPhoto
-  var fragment = document.createDocumentFragment();
-  for (var i = 0; i < arrPhotos.length; i++) {
-    fragment.appendChild(window.picture.renderPhotos(arrPhotos[i]));
+  window.addPhoto = function(responseData) {
+    var fragment = document.createDocumentFragment();
+    for (var i = 0; i < responseData.length; i++) {
+      fragment.appendChild(window.picture.renderPhotos(responseData[i]));
+    }
+    pictures.appendChild(fragment);
   }
-  pictures.appendChild(fragment);
-
   function closeBigPhoto() {
     bigPicture.classList.add('hidden');
   }

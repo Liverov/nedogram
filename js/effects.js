@@ -14,7 +14,6 @@
   var depth = document.querySelector('.effect-level__depth');
   var startScroll;
   var effectLineWidth = document.querySelector('.effect-level__line').offsetWidth;
-
   window.effects = {
     effectChangeHandler: function (scrollPosition) {
       imgPreview.setAttribute('class', '');
@@ -82,8 +81,8 @@
   effects.addEventListener('change', function (evt) {
     window.pictureEffect = evt.target.value;
     window.effects.effectChangeHandler(100);
-    effectLevelPin.style = 'left:' + effectLineWidth + '';
-    depth.style = 'width:' + effectLineWidth + '';
+    effectLevelPin.style = 'left:' + effectLineWidth;
+    depth.style = 'width:' + effectLineWidth;
   });
 
   effectLevelPin.addEventListener('mousedown', function (evt) {
