@@ -41,13 +41,13 @@
       var matches = FILE_TYPES.some(function (evt) {
         return pictureName.endsWith(evt);
       });
-  
+
       if (matches) {
         var fileReader = new FileReader();
         fileReader.addEventListener('load', function () {
           pictureImgPreview.src = fileReader.result;
         });
-  
+
         fileReader.readAsDataURL(pictureFile);
       }
     }

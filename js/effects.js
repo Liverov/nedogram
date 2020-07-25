@@ -53,7 +53,7 @@
       }
     }, resetSlider: function () {
       effectLevelPin.style = 'left:' + effectLineWidth + 'px';
-      depth.style = 'width:' + effectLineWidth  + 'px';
+      depth.style = 'width:' + effectLineWidth + 'px';
     }
   };
 
@@ -83,7 +83,7 @@
   effectList.addEventListener('change', function (evt) {
     window.pictureEffect = evt.target.value;
     window.effects.effectChangeHandler(100);
-    var effectLineWidth = document.querySelector('.effect-level__line').offsetWidth;
+    effectLineWidth = document.querySelector('.effect-level__line').offsetWidth;
     effectLevelPin.style = 'left:' + effectLineWidth + 'px';
     depth.style = 'width:' + effectLineWidth + 'px';
   });

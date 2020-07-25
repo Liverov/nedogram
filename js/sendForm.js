@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
   var formImage = document.querySelector('#upload-select-image');
   formImage.addEventListener('submit', function submitHandler(evt) {

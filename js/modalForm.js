@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
   var main = document.querySelector('main');
   window.modalForm = {
@@ -9,13 +11,13 @@
       document.addEventListener('keydown', closeSuccessHandler);
     },
     showErrorMessage: function () {
-      var error = document.querySelector('#error').content
+      var error = document.querySelector('#error').content;
       var errorClone = error.cloneNode(true);
       main.appendChild(errorClone);
       document.addEventListener('click', closeErrorFormHandler);
       document.addEventListener('keydown', closeErrorHandler);
     }
-  }
+  };
 
   function closeSuccessFormHandler(evt) {
     var successInner = document.querySelector('.success__inner');
