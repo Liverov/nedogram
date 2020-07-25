@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  console.log('1' + document.querySelector('.picture'));
   var COMMENTS_MESSAGES = [
     'Всё отлично!',
     'В целом всё неплохо. Но не всё.',

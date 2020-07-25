@@ -5,7 +5,7 @@
   var pictures = document.querySelector('.pictures');
   var bigPicture = document.querySelector('.big-picture');
   var thumbnails = pictures.querySelectorAll('.picture');
- 
+  
   window.preview = {
     openBigPicture: function (element, data) {
       element.addEventListener('click', function () {
@@ -22,7 +22,9 @@
   };
 
   // previewThumbnails
-  for (var i = 0; i < thumbnails.length; i++) {
-    window.preview.openBigPicture(thumbnails[i], arrPhotos[i]);
+  window.bigPhoto = function(responseData) {
+    for (var i = 0; i < thumbnails.length; i++) {
+      window.preview.openBigPicture(thumbnails[i], responseData[i]);
+    }
   }
 })();
