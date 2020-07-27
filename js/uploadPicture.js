@@ -5,7 +5,6 @@
   var uploadFile = pictures.querySelector('#upload-file');
   var uploadOverlay = pictures.querySelector('.img-upload__overlay');
   var uploadCancel = pictures.querySelector('#upload-cancel');
-
   window.uploadPicture = {
     closeModal: function () {
       uploadFile.value = '';

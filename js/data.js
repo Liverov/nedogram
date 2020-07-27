@@ -36,11 +36,11 @@
     generateComments: function (num) {
       var comments = [];
       for (var i = 0; i < num; i++) {
-        comments[i] = {
-          avatar: 'img/avatar-' + window.utils.generateRandomInt(1, 6) + '.svg',
-          message: COMMENTS_MESSAGES[window.utils.generateRandomInt(0, 5)],
-          name: COMMENTS_NAMES[window.utils.generateRandomInt(0, 6)]
-        };
+        comments.push({
+          'avatar': 'img/avatar-' + window.utils.generateRandomInt(1, 6) + '.svg',
+          'message': COMMENTS_MESSAGES[window.utils.generateRandomInt(0, 5)],
+          'name': COMMENTS_NAMES[window.utils.generateRandomInt(0, 6)]
+        });
       }
 
       return comments;

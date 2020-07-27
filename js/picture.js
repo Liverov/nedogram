@@ -1,14 +1,9 @@
 'use strict';
 
 (function () {
-  var arrPhotos = window.data.generatePhotos(window.data.PHOTOS_QUANTITY);
-  var pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
-  var pictures = document.querySelector('.pictures');
-  var bigPicture = document.querySelector('.big-picture');
-  var bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
-
   window.picture = {
     renderPhotos: function (photo) {
+      var pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
       var photoElement = pictureTemplate.cloneNode(true);
       var photoImg = photoElement.querySelector('img');
       var photoLikes = photoElement.querySelector('.picture__likes');
@@ -17,14 +12,17 @@
       photoImg.src = photo.url;
       photoLikes.textContent = photo.likes;
       photoComments.textContent = photo.comments.length;
+
       return photoElement;
     },
     renderBigPhoto: function (photo) {
-      var bigPicImg = bigPicture.querySelector('.big-picture__img');
-      var bigPicComments = bigPicture.querySelector('.comments-count');
-      var bigPicLikes = bigPicture.querySelector('.likes-count');
-      var bigPicSocialComments = bigPicture.querySelector('.social__comments');
-      var bigPicDescription = bigPicture.querySelector('.social__caption');
+      window.bigPicture = document.querySelector('.big-picture');
+      var bigPictureCancel = window.bigPicture.querySelector('.big-picture__cancel');
+      var bigPicImg = window.bigPicture.querySelector('.big-picture__img');
+      var bigPicComments = window.bigPicture.querySelector('.comments-count');
+      var bigPicLikes = window.bigPicture.querySelector('.likes-count');
+      var bigPicSocialComments = window.bigPicture.querySelector('.social__comments');
+      var bigPicDescription = window.bigPicture.querySelector('.social__caption');
 
       bigPicImg.querySelector('img').src = photo.url;
       bigPicLikes.textContent = photo.likes;
@@ -42,27 +40,26 @@
 
       bigPicDescription.textContent = photo.description;
 
-      // Закрываем по Esc Только если бигфото открыто
       document.addEventListener('keydown', closeEscBigPhoto);
-      // Закрываем по клику только ели бигфото открыто
       bigPictureCancel.addEventListener('click', closeBigPhoto);
+    },
+    renderPreview: function (responseData) {
+      var pictures = document.querySelector('.pictures');
+      var fragment = document.createDocumentFragment();
+      for (var i = 0; i < responseData.length; i++) {
+        fragment.appendChild(window.picture.renderPhotos(responseData[i]));
+      }
+      pictures.appendChild(fragment);
     }
   };
 
-  // fragmentRenderPhoto
-  var fragment = document.createDocumentFragment();
-  for (var i = 0; i < arrPhotos.length; i++) {
-    fragment.appendChild(window.picture.renderPhotos(arrPhotos[i]));
-  }
-  pictures.appendChild(fragment);
-
   function closeBigPhoto() {
-    bigPicture.classList.add('hidden');
+    window.bigPicture.classList.add('hidden');
   }
 
   function closeEscBigPhoto(evt) {
     window.utils.isEscEvent(evt, function () {
-      bigPicture.classList.add('hidden');
+      window.bigPicture.classList.add('hidden');
     });
   }
 
