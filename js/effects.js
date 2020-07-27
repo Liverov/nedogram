@@ -8,12 +8,12 @@
   var scaleBigger = document.querySelector('.scale__control--bigger');
   var scaleValue = document.querySelector('.scale__control--value');
 
-  var effects = uploadOverlay.querySelector('.effects'); // Fieldset
+  var effectList = uploadOverlay.querySelector('.effects'); // Fieldset
   var effectLevel = uploadOverlay.querySelector('.img-upload__effect-level');
   var effectLevelPin = document.querySelector('.effect-level__pin');
   var depth = document.querySelector('.effect-level__depth');
-  var startScroll;
   var effectLineWidth = document.querySelector('.effect-level__line').offsetWidth;
+  var startScroll;
   window.effects = {
     effectChangeHandler: function (scrollPosition) {
       imgPreview.setAttribute('class', '');
@@ -51,6 +51,9 @@
           imgPreview.style = '';
           break;
       }
+    }, resetSlider: function () {
+      effectLevelPin.style = 'left:' + effectLineWidth + 'px';
+      depth.style = 'width:' + effectLineWidth + 'px';
     }
   };
 
@@ -77,19 +80,19 @@
     }
   });
 
-  // effects.addEventListener('change', window.effects.effectChangeHandler);
-  effects.addEventListener('change', function (evt) {
+  effectList.addEventListener('change', function (evt) {
     window.pictureEffect = evt.target.value;
     window.effects.effectChangeHandler(100);
-    effectLevelPin.style = 'left:' + effectLineWidth;
-    depth.style = 'width:' + effectLineWidth;
+    effectLineWidth = document.querySelector('.effect-level__line').offsetWidth;
+    effectLevelPin.style = 'left:' + effectLineWidth + 'px';
+    depth.style = 'width:' + effectLineWidth + 'px';
   });
 
   effectLevelPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
     var onMouseMove = function (moveEvt) {
-      var lineWidth = document.querySelector('.effect-level__line').offsetWidth;
+      effectLineWidth = document.querySelector('.effect-level__line').offsetWidth;
       var moveScroll = startScroll - moveEvt.clientX;
       startScroll = moveEvt.clientX;
       var scrollPosition = effectLevelPin.offsetLeft - moveScroll;
@@ -97,13 +100,13 @@
       if (scrollPosition < 0) {
         scrollPosition = 0;
       }
-      if (scrollPosition > lineWidth) {
-        scrollPosition = lineWidth;
+      if (scrollPosition > effectLineWidth) {
+        scrollPosition = effectLineWidth;
       }
 
       effectLevelPin.style.left = scrollPosition + 'px';
       depth.style.width = scrollPosition + 'px';
-      scrollPosition = scrollPosition * 100 / lineWidth;
+      scrollPosition = scrollPosition * 100 / effectLineWidth;
       effectLevelPin.value = scrollPosition;
       return window.effects.effectChangeHandler(scrollPosition);
     };
