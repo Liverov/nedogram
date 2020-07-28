@@ -35,21 +35,21 @@
       if (evt.target.classList.contains('text__hashtags')) {
         var hashTagRegExp = /^#[a-zа-яA-ZА-Я0-9]{1,19}$/;
         var hashTag = uploadHashTagsField.value.trim();
-        var hashTagsArrays = hashTag.split(' ');
-        var hashTagslowerCaseArrays = [];
+        var hashTags = hashTag.split(' ');
+        var hashTagslowerCase = [];
         var hashTagErrorMessage = '';
-        for (var i = 0; i < hashTagsArrays.length; i++) {
-          hashTagslowerCaseArrays.push(hashTagsArrays[i].toLowerCase());
-          if (!hashTagRegExp.test(hashTagslowerCaseArrays[i])) {
+        for (var i = 0; i < hashTags.length; i++) {
+          hashTagslowerCase.push(hashTags[i].toLowerCase());
+          if (!hashTagRegExp.test(hashTagslowerCase[i])) {
             hashTagErrorMessage += 'Строка после решётки должна состоять из букв и чисел. ';
           }
-          if (hashTagslowerCaseArrays[i].length > MAX_HASHTAG_LENGTH || hashTagslowerCaseArrays[i].length < MIN_HASHTAG_LENGTH) {
+          if (hashTagslowerCase[i].length > MAX_HASHTAG_LENGTH || hashTagslowerCase[i].length < MIN_HASHTAG_LENGTH) {
             hashTagErrorMessage += 'Максимальная длина одного хэш-тега 20 символов, включая решётку и не менее 2 символов. ';
           }
-          if (!(hashTagslowerCaseArrays.indexOf(hashTagslowerCaseArrays[i]) === hashTagslowerCaseArrays.lastIndexOf(hashTagslowerCaseArrays[i]))) {
+          if (!(hashTagslowerCase.indexOf(hashTagslowerCase[i]) === hashTagslowerCase.lastIndexOf(hashTagslowerCase[i]))) {
             hashTagErrorMessage += 'Один и тот же хэш-тег не может быть использован дважды. ';
           }
-          if (hashTagslowerCaseArrays.length > MAX_HASHTAGS) {
+          if (hashTagslowerCase.length > MAX_HASHTAGS) {
             hashTagErrorMessage += 'Нельзя указать больше пяти хэш-тегов. ';
           }
         }
