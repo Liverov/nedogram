@@ -4,18 +4,17 @@
   var DEFAULT_COMMENTS_COUNT = 5;
 
   window.photosArray = [];
-  
   var closeBigPhotoHandler = function () {
     window.bigPicture.classList.add('hidden');
     window.picture.resetBigPhotoHandler();
-  }
+  };
 
   var closeEscBigPhotoHandler = function (evt) {
     window.utils.isEscEvent(evt, function () {
       window.bigPicture.classList.add('hidden');
       window.picture.resetBigPhotoHandler();
     });
-  }
+  };
 
   window.picture = {
     successHandler: function (responseData) {
@@ -52,7 +51,7 @@
       window.bigPictureCommentsLoader = window.bigPicture.querySelector('.comments-loader');
       var bigPictureCommentCurrentCounter = window.bigPicture.querySelector('.comments-count__current');
       bigPictureSocialComments.innerHTML = '';
-      bigPicture.classList.remove('hidden');
+      window.bigPicture.classList.remove('hidden');
 
       bigPictureImg.querySelector('img').src = photo.url;
       bigPictureLikes.textContent = photo.likes;

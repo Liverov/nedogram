@@ -12,7 +12,7 @@
 
   window.uploadPicture = {
     removeEvents: function (evt) {
-      if(evt) {
+      if (evt) {
         window.utils.isEscEvent(evt, function () {
           document.removeEventListener('keydown', window.uploadPicture.removeEvents);
         });

@@ -7,7 +7,7 @@
 
   window.checkForm = {
     checkComments: function (inputField) {
-      if(inputField.target.className === 'text__description') {
+      if (inputField.target.className === 'text__description') {
         inputField = uploadCommentField;
       } else if (inputField.target.className === 'social__footer-text') {
         inputField = photoCommentField;
@@ -46,7 +46,7 @@
           }
         }
 
-        if(hashTagsErrorCount > 0) {
+        if (hashTagsErrorCount > 0) {
           uploadHashTagsField.style.borderColor = 'red';
           uploadHashTagsField.style.borderWidth = '5px';
         }

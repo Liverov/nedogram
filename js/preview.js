@@ -8,8 +8,7 @@
         bigPicture.classList.remove('hidden');
         window.picture.renderBigPhoto(data);
         window.checkForm.inputFormEvents();
-      }
-
+      };
       element.addEventListener('click', window.renderBigPictureEvents);
       element.addEventListener('keydown', window.renderBigPictureEvents);
     },

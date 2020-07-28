@@ -15,8 +15,7 @@
   var effectLineWidth = document.querySelector('.effect-level__line').offsetWidth;
   var startScroll;
   scaleValue.value = 100;
-  console.log(scaleValue.value);
-  
+
   window.effects = {
     effectChangeHandler: function (scrollPosition) {
       imagePreview.setAttribute('class', 'img-upload__preview');
@@ -86,8 +85,6 @@
         }
       };
 
-      console.log(scaleValue.value);
-
       scaleSmaller.addEventListener('click', window.setScaleSmaller);
       scaleBigger.addEventListener('click', window.setScaleBigger);
     },
@@ -109,27 +106,27 @@
           var moveScroll = startScroll - moveEvt.clientX;
           startScroll = moveEvt.clientX;
           var scrollPosition = effectLevelPin.offsetLeft - moveScroll;
-    
+
           if (scrollPosition < 0) {
             scrollPosition = 0;
           }
           if (scrollPosition > effectLineWidth) {
             scrollPosition = effectLineWidth;
           }
-    
+
           effectLevelPin.style.left = scrollPosition + 'px';
           depth.style.width = scrollPosition + 'px';
           scrollPosition = scrollPosition * 100 / effectLineWidth;
           effectLevelPin.value = scrollPosition;
           return window.effects.effectChangeHandler(scrollPosition);
         };
-    
+
         var onMouseUp = function (upEvt) {
           upEvt.preventDefault();
           document.removeEventListener('mousemove', onMouseMove);
           document.removeEventListener('mouseup', onMouseUp);
         };
-    
+
         document.addEventListener('mousemove', onMouseMove);
         document.addEventListener('mouseup', onMouseUp);
       };
