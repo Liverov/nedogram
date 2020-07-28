@@ -28,7 +28,7 @@
       var bodyElement = document.querySelector('body');
       bodyElement.removeAttribute('class');
     },
-    openModalHandler: function (evt) {
+    openModal: function (evt) {
       window.pictureEffect = evt.target.value;
       document.querySelector('.scale__control--value').value = '100%';
       imagePreview.removeAttribute('style');
@@ -63,5 +63,5 @@
     }
   };
 
-  uploadFile.addEventListener('change', window.uploadPicture.openModalHandler);
+  uploadFile.addEventListener('change', window.uploadPicture.openModal);
 })();
