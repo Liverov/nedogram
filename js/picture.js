@@ -3,7 +3,7 @@
 (function () {
   var DEFAULT_COMMENTS_COUNT = 5;
 
-  window.photosArrays = [];
+  window.photosGroup = [];
   var closeBigPhotoHandler = function () {
     window.bigPicture.classList.add('hidden');
     window.picture.resetBigPhotoHandler();
@@ -18,14 +18,14 @@
 
   window.picture = {
     successHandler: function (responseData) {
-      window.photosArrays = responseData;
-      window.picture.updateHandler(window.photosArrays);
+      window.photosGroup = responseData;
+      window.picture.updateHandler(window.photosGroup);
     },
-    updateHandler: function (newArrays, resetData) {
+    updateHandler: function (newData, resetData) {
       if (resetData) {
         window.picture.resetPhotos();
       }
-      window.picture.renderPreview(newArrays);
+      window.picture.renderPreview(newData);
     },
     renderPhotos: function (photo) {
       var pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -58,56 +58,50 @@
       bigPictureComments.textContent = photo.comments.length;
       bigPictureDescription.textContent = photo.description;
 
-      var newCommentsArrays = photo.comments.slice();
+      var newComments = photo.comments.slice();
 
       window.resetCommentArray = function () {
-        newCommentsArrays.splice(0, photo.comments.length);
-        newCommentsArrays = photo.comments.slice();
+        newComments.splice(0, photo.comments.length);
+        newComments = photo.comments.slice();
       };
 
       var partComments = 0;
       var currentCommentsCount = bigPictureCommentCurrentCounter.textContent;
 
-      if (currentCommentsCount > newCommentsArrays.length) {
-        bigPictureCommentCurrentCounter.textContent = newCommentsArrays.length;
-      } else {
-        bigPictureCommentCurrentCounter.textContent = DEFAULT_COMMENTS_COUNT;
-      }
+      bigPictureCommentCurrentCounter.textContent = (currentCommentsCount > newComments.length) ? newComments.length : DEFAULT_COMMENTS_COUNT;
 
-      bigPictureCommentCurrentCounter.textContent = (currentCommentsCount > newCommentsArrays.length) ? newCommentsArrays.length : DEFAULT_COMMENTS_COUNT;
-
-      window.getCommentsHandler = function (evt) {
+      window.renderComments = function (evt) {
         var fragment = document.createDocumentFragment();
         window.bigPictureCommentsLoader.classList.remove('hidden');
 
-        var blockComments = newCommentsArrays.splice(0, 5);
+        var blockComments = newComments.splice(0, 5);
         partComments += blockComments.length;
 
         blockComments.forEach(function (blockComment) {
           fragment.appendChild(window.preview.renderbigPictureComments(blockComment));
           bigPictureSocialComments.appendChild(fragment);
         });
-        if (newCommentsArrays.length === 0) {
+        if (newComments.length === 0) {
           window.bigPictureCommentsLoader.classList.add('hidden');
         }
         if (evt) {
           bigPictureCommentCurrentCounter.textContent = partComments;
         }
       };
-      window.getCommentsHandler();
-      window.bigPictureCommentsLoader.addEventListener('click', window.getCommentsHandler);
+      window.renderComments();
+      window.bigPictureCommentsLoader.addEventListener('click', window.renderComments);
 
       document.addEventListener('keydown', closeEscBigPhotoHandler);
       window.bigPictureCancel.addEventListener('click', closeBigPhotoHandler);
     },
-    renderPreview: function (photosArrays) {
+    renderPreview: function (photosGroup) {
       var pictures = document.querySelector('.pictures');
       var fragment = document.createDocumentFragment();
-      for (var i = 0; i < photosArrays.length; i++) {
-        fragment.appendChild(window.picture.renderPhotos(photosArrays[i]));
+      for (var i = 0; i < photosGroup.length; i++) {
+        fragment.appendChild(window.picture.renderPhotos(photosGroup[i]));
       }
       pictures.appendChild(fragment);
-      window.preview.getThumbnailLink(photosArrays);
+      window.preview.getThumbnailLink(photosGroup);
     },
     resetPhotos: function () {
       var pictures = document.querySelector('.pictures');
@@ -121,7 +115,7 @@
     },
     resetBigPhotoHandler: function () {
       window.resetCommentArray();
-      window.bigPictureCommentsLoader.removeEventListener('click', window.getCommentsHandler);
+      window.bigPictureCommentsLoader.removeEventListener('click', window.renderComments);
       document.removeEventListener('keydown', closeEscBigPhotoHandler);
       window.bigPictureCancel.removeEventListener('click', closeBigPhotoHandler);
       window.uploadPicture.removeEventsHandler();

@@ -10,13 +10,13 @@
       imgFilters.classList.remove('img-filters--inactive');
     },
     randomfilterHandler: function () {
-      var randomPhotoArrays = window.photosArrays.sort(function () {
+      var randomPhotoArrays = window.photosGroup.sort(function () {
         return 0.5 - Math.random();
       }).slice(0, RANDOM_PHOTOS_COUNT);
       window.picture.updateHandler(randomPhotoArrays, true);
     },
     mostCommentedfilterHandler: function () {
-      var mostCommentedPhotos = window.photosArrays.slice();
+      var mostCommentedPhotos = window.photosGroup.slice();
       mostCommentedPhotos.sort(function (a, b) {
         return b.comments.length - a.comments.length;
       });
@@ -27,7 +27,7 @@
   var changeFilterHandler = function (evt) {
     switch (evt.target.id) {
       case 'filter-default':
-        window.picture.renderPreview(window.photosArrays, true);
+        window.picture.renderPreview(window.photosGroup, true);
         break;
       case 'filter-random':
         window.filters.randomfilterHandler();
