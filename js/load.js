@@ -25,7 +25,6 @@
   });
 
   xhr.timeout = XHR_TIMEOUT;
-
   xhr.open('GET', 'https://javascript.pages.academy/kekstagram/data');
   xhr.send();
 })();
