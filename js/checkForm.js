@@ -65,12 +65,12 @@
         }
       }
     },
-    inputFormEventsHandler: function () {
+    inputFormEvents: function () {
       uploadHashTagsField.addEventListener('input', window.checkForm.checkHashTags);
       uploadCommentField.addEventListener('input', window.checkForm.checkComments);
       photoCommentField.addEventListener('input', window.checkForm.checkComments);
     },
-    addFocusBlurHandlers: function () {
+    addFocusBlur: function () {
       uploadHashTagsField.addEventListener('focus', focusInputHandler);
       uploadHashTagsField.addEventListener('blur', blurInputHandler);
       uploadCommentField.addEventListener('focus', focusInputHandler);
@@ -88,10 +88,10 @@
   };
 
   var focusInputHandler = function () {
-    document.removeEventListener('keydown', window.uploadPicture.removeEventsHandler);
+    document.removeEventListener('keydown', window.uploadPicture.removeEvents);
   };
 
   var blurInputHandler = function () {
-    document.addEventListener('keydown', window.uploadPicture.removeEventsHandler);
+    document.addEventListener('keydown', window.uploadPicture.removeEvents);
   };
 })();

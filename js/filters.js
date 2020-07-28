@@ -9,13 +9,13 @@
     showFilterBarOnPage: function () {
       imgFilters.classList.remove('img-filters--inactive');
     },
-    randomfilterHandler: function () {
+    randomfilter: function () {
       var randomPhotoArrays = window.photosGroup.sort(function () {
         return 0.5 - Math.random();
       }).slice(0, RANDOM_PHOTOS_COUNT);
       window.picture.updateHandler(randomPhotoArrays, true);
     },
-    mostCommentedfilterHandler: function () {
+    mostCommentedfilter: function () {
       var mostCommentedPhotos = window.photosGroup.slice();
       mostCommentedPhotos.sort(function (a, b) {
         return b.comments.length - a.comments.length;
@@ -24,16 +24,16 @@
     }
   };
 
-  var changeFilterHandler = function (evt) {
+  var changeFilter = function (evt) {
     switch (evt.target.id) {
       case 'filter-default':
         window.picture.renderPreview(window.photosGroup, true);
         break;
       case 'filter-random':
-        window.filters.randomfilterHandler();
+        window.filters.randomfilter();
         break;
       case 'filter-discussed':
-        window.filters.mostCommentedfilterHandler();
+        window.filters.mostCommentedfilter();
         break;
     }
     for (var j = 0; j < buttonFilters.length; j++) {
@@ -46,6 +46,6 @@
   };
 
   for (var i = 0; i < buttonFilters.length; i++) {
-    buttonFilters[i].addEventListener('click', window.debounce(changeFilterHandler));
+    buttonFilters[i].addEventListener('click', window.debounce(changeFilter));
   }
 })();
