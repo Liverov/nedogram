@@ -19,7 +19,7 @@
     }
   };
 
-  function closeSuccessFormHandler(evt) {
+  var closeSuccessFormHandler = function (evt) {
     var successInner = document.querySelector('.success__inner');
     var successModaTitle = document.querySelector('.success__title');
     if (evt.target === successInner || evt.target === successModaTitle) {
@@ -30,22 +30,21 @@
       document.removeEventListener('click', closeSuccessFormHandler);
       document.removeEventListener('keydown', closeSuccessHandler);
     }
+  };
 
-  }
-
-  function closeSuccessHandler(evt) {
+  var closeSuccessHandler = function (evt) {
     if (evt.keyCode === window.utils.ESCAPE_KEYCODE) {
       closeSuccessFormHandler(evt);
     }
-  }
+  };
 
-  function closeErrorHandler(evt) {
+  var closeErrorHandler = function (evt) {
     if (evt.keyCode === window.utils.ESCAPE_KEYCODE) {
       closeErrorFormHandler(evt);
     }
-  }
+  };
 
-  function closeErrorFormHandler(evt) {
+  var closeErrorFormHandler = function (evt) {
     var errorModalTemplate = main.querySelector('.error');
     var errorModalInner = document.querySelector('.error__inner');
     var errorModalTitle = document.querySelector('.error___title');
@@ -56,5 +55,5 @@
       document.removeEventListener('click', closeErrorFormHandler);
       document.removeEventListener('keydown', closeErrorHandler);
     }
-  }
+  };
 })();

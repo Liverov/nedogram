@@ -11,29 +11,32 @@
   var pictureImgPreview = picturePreview.querySelector('img');
 
   window.uploadPicture = {
-    closeModalHandler: function () {
-      uploadFile.value = '';
+    removeEvents: function (evt) {
+      if(evt) {
+        window.utils.isEscEvent(evt, function () {
+          document.removeEventListener('keydown', window.uploadPicture.removeEvents);
+        });
+      }
       uploadOverlay.classList.add('hidden');
-      document.removeEventListener('keydown', window.uploadPicture.closeModalHandler);
-      uploadCancel.removeEventListener('click', window.uploadPicture.closeModalHandler);
+      uploadFile.value = '';
+      uploadCancel.removeEventListener('click', window.uploadPicture.removeEvents);
       document.querySelector('#upload-select-image').reset();
+      window.checkForm.removeFormEvents();
       window.effects.resetSlider();
-    },
-    closeEscModalHandler: function (evt) {
-      window.utils.isEscEvent(evt, function () {
-        uploadFile.value = '';
-        uploadOverlay.classList.add('hidden');
-        document.removeEventListener('keydown', window.uploadPicture.closeModalHandler);
-      });
+      window.effects.resetMouseDownChangeHandler();
     },
     openModalHandler: function () {
       document.querySelector('body').classList.add('modal-open');
       uploadOverlay.classList.remove('hidden');
-      document.addEventListener('keydown', window.uploadPicture.closeEscModalHandler);
-      uploadCancel.addEventListener('click', window.uploadPicture.closeModalHandler);
       var effectLevel = document.querySelector('.img-upload__effect-level');
       effectLevel.classList.add('hidden');
       window.uploadPicture.uploadPicturePreview();
+      window.effects.scrollEffectChangeHandler();
+      window.checkForm.inputFormEvents();
+      window.checkForm.addFocusBlurHandlers();
+
+      document.addEventListener('keydown', window.uploadPicture.removeEvents);
+      uploadCancel.addEventListener('click', window.uploadPicture.removeEvents);
     },
     uploadPicturePreview: function () {
       var pictureFile = uploadFile.files[0];
@@ -53,9 +56,6 @@
     }
   };
 
-  uploadFile.addEventListener('change', function (evt) {
-    evt.preventDefault();
-    window.uploadPicture.openModalHandler();
-  });
+  uploadFile.addEventListener('change', window.uploadPicture.openModalHandler);
 
 })();
