@@ -17,6 +17,7 @@
           photosArrayIndexes.push(randomPhotoIndex);
         }
       }
+
       var randomPhotoArrays = photosArrayIndexes.map(function (element) {
         return window.photosArrays[element];
       });
@@ -43,7 +44,6 @@
         window.filters.mostCommentedfilterHandler();
         break;
     }
-
     for (var j = 0; j < buttonFilters.length; j++) {
       if (evt.target.id === buttonFilters[j].id) {
         buttonFilters[j].classList.add('img-filters__button--active');
