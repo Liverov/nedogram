@@ -17,7 +17,7 @@
           photosArrayIndexes.push(randomPhotoIndex);
         }
       }
-      
+
       var randomPhotoArrays = photosArrayIndexes.map(function (element) {
         return window.photosArrays[element];
       });
