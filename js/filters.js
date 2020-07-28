@@ -10,17 +10,9 @@
       imgFilters.classList.remove('img-filters--inactive');
     },
     randomfilterHandler: function () {
-      var photosArrayIndexes = [];
-      for (var k = 0; photosArrayIndexes.length < RANDOM_PHOTOS_COUNT; k++) {
-        var randomPhotoIndex = window.utils.getRandomInt(0, window.photosArrays.length - 1);
-        if (!(photosArrayIndexes.includes(randomPhotoIndex))) {
-          photosArrayIndexes.push(randomPhotoIndex);
-        }
-      }
-
-      var randomPhotoArrays = photosArrayIndexes.map(function (element) {
-        return window.photosArrays[element];
-      });
+      var randomPhotoArrays = window.photosArrays.sort(function () {
+        return 0.5 - Math.random();
+      }).slice(0, RANDOM_PHOTOS_COUNT);
       window.picture.updateHandler(randomPhotoArrays, true);
     },
     mostCommentedfilterHandler: function () {
