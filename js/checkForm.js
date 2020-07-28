@@ -95,5 +95,4 @@
   var blurInputHandler = function () {
     document.addEventListener('keydown', window.uploadPicture.removeEventsHandler);
   };
-
 })();
