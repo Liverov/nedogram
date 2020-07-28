@@ -12,19 +12,19 @@
   var imagePreview = pictures.querySelector('.img-upload__preview');
 
   window.uploadPicture = {
-    removeEventsHandler: function (evt) {
+    removeEvents: function (evt) {
       if (evt) {
         window.utils.isEscEvent(evt, function () {
-          document.removeEventListener('keydown', window.uploadPicture.removeEventsHandler);
+          document.removeEventListener('keydown', window.uploadPicture.removeEvents);
         });
       }
       uploadOverlay.classList.add('hidden');
       uploadFile.value = '';
-      uploadCancel.removeEventListener('click', window.uploadPicture.removeEventsHandler);
+      uploadCancel.removeEventListener('click', window.uploadPicture.removeEvents);
       document.querySelector('#upload-select-image').reset();
       window.checkForm.removeFormEvents();
       window.effects.resetSlider();
-      window.effects.resetMouseDownChangeHandler();
+      window.effects.resetMouseDownChange();
       var bodyElement = document.querySelector('body');
       bodyElement.removeAttribute('class');
     },
@@ -38,12 +38,12 @@
       var effectLevel = document.querySelector('.img-upload__effect-level');
       effectLevel.classList.add('hidden');
       window.uploadPicture.uploadPicturePreview();
-      window.effects.scrollEffectChangeHandler();
-      window.checkForm.inputFormEventsHandler();
-      window.checkForm.addFocusBlurHandlers();
-      window.effects.scaleChangeHandler();
-      document.addEventListener('keydown', window.uploadPicture.removeEventsHandler);
-      uploadCancel.addEventListener('click', window.uploadPicture.removeEventsHandler);
+      window.effects.scrollEffectChange();
+      window.checkForm.inputFormEvents();
+      window.checkForm.addFocusBlur();
+      window.effects.scaleChange();
+      document.addEventListener('keydown', window.uploadPicture.removeEvents);
+      uploadCancel.addEventListener('click', window.uploadPicture.removeEvents);
     },
     uploadPicturePreview: function () {
       var pictureFile = uploadFile.files[0];

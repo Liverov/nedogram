@@ -9,7 +9,7 @@
   xhr.addEventListener('load', function () {
     if (xhr.status === 200) {
       window.responseData = xhr.response;
-      window.picture.successHandler(window.responseData);
+      window.picture.successData(window.responseData);
       window.filters.showFilterBarOnPage();
     } else {
       throw Error('Ошибка: ' + xhr.status + ' - ' + xhr.statusText);
