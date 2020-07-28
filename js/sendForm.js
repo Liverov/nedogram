@@ -6,7 +6,6 @@
   var formImage = document.querySelector('#upload-select-image');
   formImage.addEventListener('submit', function submitHandler(evt) {
     evt.preventDefault();
-
     var formData = new FormData(formImage);
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
