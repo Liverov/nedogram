@@ -1,6 +1,9 @@
 'use strict';
 
 (function () {
+  var SCALE_STEP = 25;
+  var DEFAULT_SCALE_VALUE = '100%';
+
   var pictures = document.querySelector('.pictures');
   var uploadOverlay = pictures.querySelector('.img-upload__overlay');
   var imagePreview = pictures.querySelector('.img-upload__preview');
@@ -13,14 +16,17 @@
   var effectLevelPin = document.querySelector('.effect-level__pin');
   var depth = document.querySelector('.effect-level__depth');
   var effectLineWidth = document.querySelector('.effect-level__line').offsetWidth;
+  var effectLevelValue = document.querySelector('.effect-level__value');
   var startScroll;
-  scaleValue.value = 100;
 
   window.effects = {
     effectChangeHandler: function (scrollPosition) {
       imagePreview.setAttribute('class', 'img-upload__preview');
       imagePreview.classList.add('effects__preview--' + window.pictureEffect);
+      var value = +effectLevelPin.style.left.replace('px', '');
+      effectLevelValue.setAttribute('value', (value * 100 / 450).toFixed(1));
 
+      window.effects.scaleChangeHandler();
       if (window.pictureEffect === 'none') {
         effectLevel.classList.add('hidden');
       } else {
@@ -53,40 +59,40 @@
           imagePreview.style = '';
           break;
       }
-
-      window.effects.scaleChangeHandler();
     },
     resetSlider: function () {
       effectLevelPin.style = 'left:' + effectLineWidth + 'px';
       depth.style = 'width:' + effectLineWidth + 'px';
-      scaleSmaller.removeEventListener('click', window.setScaleSmaller);
-      scaleBigger.removeEventListener('click', window.setScaleBigger);
+      imagePreview.style = 'transform: scale(1)';
     },
     scaleChangeHandler: function () {
       var scale = 100;
-      var scaleStep = 25;
-      scaleValue.value = scale + '%';
-
-      window.setScaleSmaller = function () {
-        if (scale - scaleStep >= scaleStep) {
-          scale -= scaleStep;
-          var scaleSumm = scale / 100;
+      scaleValue.value = DEFAULT_SCALE_VALUE;
+      var scaleSumm;
+      var setScaleSmallerHandler = function () {
+        if (scale - SCALE_STEP >= SCALE_STEP) {
+          scale -= SCALE_STEP;
+          scaleSumm = scale / 100;
           imagePreview.style = 'transform: scale(' + scaleSumm + ')';
           scaleValue.value = scale + '%';
         }
       };
 
-      window.setScaleBigger = function () {
+      var setScaleBiggerHandler = function () {
         if (scale < 100) {
-          scale += scaleStep;
-          var scaleSumm = scale / 100;
+          scale += SCALE_STEP;
+          scaleSumm = scale / 100;
           imagePreview.style = 'transform: scale(' + scaleSumm + ')';
           scaleValue.value = scale + '%';
         }
       };
 
-      scaleSmaller.addEventListener('click', window.setScaleSmaller);
-      scaleBigger.addEventListener('click', window.setScaleBigger);
+      scaleSmaller.addEventListener('click', setScaleSmallerHandler);
+      scaleBigger.addEventListener('click', setScaleBiggerHandler);
+    },
+    resetScaleHandler: function () {
+      scaleSmaller.removeEventListener('click', window.setScaleSmallerHandler);
+      scaleBigger.removeEventListener('click', window.setScaleBiggerHandler);
     },
     scrollEffectChangeHandler: function () {
 
@@ -101,7 +107,7 @@
       window.setMouseDownChangeHandler = function (evt) {
         evt.preventDefault();
 
-        var onMouseMove = function (moveEvt) {
+        var onMouseMoveChangeHandler = function (moveEvt) {
           effectLineWidth = document.querySelector('.effect-level__line').offsetWidth;
           var moveScroll = startScroll - moveEvt.clientX;
           startScroll = moveEvt.clientX;
@@ -121,14 +127,14 @@
           return window.effects.effectChangeHandler(scrollPosition);
         };
 
-        var onMouseUp = function (upEvt) {
+        var onMouseUpChangeHandler = function (upEvt) {
           upEvt.preventDefault();
-          document.removeEventListener('mousemove', onMouseMove);
-          document.removeEventListener('mouseup', onMouseUp);
+          document.removeEventListener('mousemove', onMouseMoveChangeHandler);
+          document.removeEventListener('mouseup', onMouseUpChangeHandler);
         };
 
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('mouseup', onMouseUp);
+        document.addEventListener('mousemove', onMouseMoveChangeHandler);
+        document.addEventListener('mouseup', onMouseUpChangeHandler);
       };
 
       effectList.addEventListener('change', window.setChangeEffectList);
