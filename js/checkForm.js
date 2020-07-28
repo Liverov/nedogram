@@ -4,7 +4,7 @@
   var MAX_TEXT_LENGTH = 140;
   var MAX_HASHTAGS = 5;
   var MAX_HASHTAG_LENGTH = 20;
-  var MIN_HASHTAG_LENGTH = 20;
+  var MIN_HASHTAG_LENGTH = 2;
 
   var uploadHashTagsField = document.querySelector('.text__hashtags');
   var uploadCommentField = document.querySelector('.text__description');
@@ -34,49 +34,34 @@
     checkHashTags: function (evt) {
       if (evt.target.classList.contains('text__hashtags')) {
         var hashTagRegExp = /^#[a-zа-яA-ZА-Я0-9]{1,19}$/;
-        var hashTagsErrorCount = 0;
         var hashTag = uploadHashTagsField.value.trim();
         var hashTagsArrays = hashTag.split(' ');
         var hashTagslowerCaseArrays = [];
+        var hashTagErrorMessage = '';
         for (var i = 0; i < hashTagsArrays.length; i++) {
           hashTagslowerCaseArrays.push(hashTagsArrays[i].toLowerCase());
           if (!hashTagRegExp.test(hashTagslowerCaseArrays[i])) {
-            hashTagsErrorCount = 1;
-          } else if (hashTagslowerCaseArrays[i].length > MAX_HASHTAG_LENGTH || hashTagslowerCaseArrays[i].length < MIN_HASHTAG_LENGTH) {
-            hashTagsErrorCount = 2;
-          } else if (!(hashTagslowerCaseArrays.indexOf(hashTagslowerCaseArrays[i]) === hashTagslowerCaseArrays.lastIndexOf(hashTagslowerCaseArrays[i]))) {
-            hashTagsErrorCount = 3;
-          } else if (hashTagslowerCaseArrays.length > MAX_HASHTAGS) {
-            hashTagsErrorCount = 4;
+            hashTagErrorMessage += 'Строка после решётки должна состоять из букв и чисел. ';
+          }
+          if (hashTagslowerCaseArrays[i].length > MAX_HASHTAG_LENGTH || hashTagslowerCaseArrays[i].length < MIN_HASHTAG_LENGTH) {
+            hashTagErrorMessage += 'Максимальная длина одного хэш-тега 20 символов, включая решётку и не менее 2 символов. ';
+          }
+          if (!(hashTagslowerCaseArrays.indexOf(hashTagslowerCaseArrays[i]) === hashTagslowerCaseArrays.lastIndexOf(hashTagslowerCaseArrays[i]))) {
+            hashTagErrorMessage += 'Один и тот же хэш-тег не может быть использован дважды. ';
+          }
+          if (hashTagslowerCaseArrays.length > MAX_HASHTAGS) {
+            hashTagErrorMessage += 'Нельзя указать больше пяти хэш-тегов. ';
           }
         }
 
-        if (hashTagsErrorCount > 0) {
+        if (hashTagErrorMessage) {
           uploadHashTagsField.style.borderColor = 'red';
           uploadHashTagsField.style.borderWidth = '5px';
-        }
-
-        switch (hashTagsErrorCount) {
-          case 0:
-            uploadHashTagsField.style.borderColor = '';
-            uploadHashTagsField.setCustomValidity('');
-            break;
-          case 1:
-            uploadHashTagsField.setCustomValidity('Строка после решётки должна состоять из букв и чисел');
-            uploadHashTagsField.reportValidity();
-            break;
-          case 2:
-            uploadHashTagsField.setCustomValidity('Максимальная длина одного хэш-тега 20 символов, включая решётку');
-            uploadHashTagsField.reportValidity();
-            break;
-          case 3:
-            uploadHashTagsField.setCustomValidity('Один и тот же хэш-тег не может быть использован дважды');
-            uploadHashTagsField.reportValidity();
-            break;
-          case 4:
-            uploadHashTagsField.setCustomValidity('Нельзя указать больше пяти хэш-тегов');
-            uploadHashTagsField.reportValidity();
-            break;
+          uploadHashTagsField.setCustomValidity(hashTagErrorMessage);
+          uploadHashTagsField.reportValidity();
+        } else {
+          uploadHashTagsField.style.borderColor = '';
+          uploadHashTagsField.setCustomValidity('');
         }
       }
     },
@@ -109,5 +94,4 @@
   var blurInputHandler = function () {
     document.addEventListener('keydown', window.uploadPicture.removeEventsHandler);
   };
-
 })();

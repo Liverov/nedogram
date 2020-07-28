@@ -74,6 +74,8 @@
         bigPictureCommentCurrentCounter.textContent = DEFAULT_COMMENTS_COUNT;
       }
 
+      bigPictureCommentCurrentCounter.textContent = (currentCommentsCount > newCommentsArrays.length) ? newCommentsArrays.length : DEFAULT_COMMENTS_COUNT;
+
       window.getCommentsHandler = function (evt) {
         var fragment = document.createDocumentFragment();
         window.bigPictureCommentsLoader.classList.remove('hidden');
