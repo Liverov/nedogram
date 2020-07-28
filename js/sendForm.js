@@ -12,10 +12,10 @@
     xhr.send(formData);
     xhr.addEventListener('load', function submitFormHandler() {
       if (xhr.status === 200) {
-        window.uploadPicture.closeModalHandler();
+        window.uploadPicture.removeEvents();
         window.modalForm.showSuccessMessage();
       } else {
-        window.uploadPicture.closeModalHandler();
+        window.uploadPicture.removeEvents();
         window.modalForm.showErrorMessage();
       }
     });

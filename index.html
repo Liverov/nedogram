@@ -153,7 +153,9 @@
           </div>
 
           <!-- Комментарии к изображению -->
-          <div class="social__comment-count">5 из <span class="comments-count">125</span> комментариев</div>
+          <div class="social__comment-count">
+            <span class="comments-count__current">5</span>
+            из <span class="comments-count">125</span> комментариев</div>
           <ul class="social__comments">
             <li class="social__comment">
               <img class="social__picture" src="img/avatar-4.svg" alt="Аватар комментатора фотографии" width="35" height="35">
@@ -232,15 +234,24 @@
   <template id="messages">
     <div class="img-upload__message  img-upload__message--loading">Загружаем...</div>
   </template>
+
+  <template id="social__comment">
+    <li class="social__comment">
+      <img class="social__picture" src="img/avatar-4.svg" alt="Аватар комментатора фотографии" width="35" height="35">
+      <p class="social__text">Мега фото! Просто обалдеть. Как вам так удалось?</p>
+    </li>
+  </template>
+
   <script src="js/utils.js"></script>
   <script src="js/load.js"></script>
-  <script src="js/data.js"></script>
   <script src="js/uploadPicture.js"></script>
   <script src="js/picture.js"></script>
   <script src="js/preview.js"></script>
-  <script src="js/form.js"></script>
+  <script src="js/checkForm.js"></script>
   <script src="js/effects.js"></script>
   <script src="js/sendForm.js"></script>
   <script src="js/modalForm.js"></script>
+  <script src="js/debounce.js"></script>
+  <script src="js/filters.js"></script>
 </body>
 </html>

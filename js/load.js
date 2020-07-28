@@ -7,8 +7,8 @@
   xhr.addEventListener('load', function () {
     if (xhr.status === 200) {
       window.responseData = xhr.response;
-      window.picture.renderPreview(window.responseData);
-      window.preview.bigPhoto(window.responseData);
+      window.picture.successHandler(window.responseData);
+      window.filters.showFiltersOnPage();
     } else {
       throw Error('Ошибка: ' + xhr.status);
     }
