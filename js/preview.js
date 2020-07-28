@@ -7,7 +7,7 @@
         var bigPicture = document.querySelector('.big-picture');
         bigPicture.classList.remove('hidden');
         window.picture.renderBigPhoto(data);
-        window.checkForm.inputFormEventsHandler();
+        window.checkForm.inputFormEvents();
       };
       element.addEventListener('click', window.renderBigPictureEventsHandler);
       element.addEventListener('keydown', window.renderBigPictureEventsHandler);

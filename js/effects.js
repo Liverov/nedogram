@@ -20,13 +20,13 @@
   var startScroll;
 
   window.effects = {
-    effectChangeHandler: function (scrollPosition) {
+    effectChange: function (scrollPosition) {
       imagePreview.setAttribute('class', 'img-upload__preview');
       imagePreview.classList.add('effects__preview--' + window.pictureEffect);
       var value = +effectLevelPin.style.left.replace('px', '');
       effectLevelValue.setAttribute('value', (value * 100 / 450).toFixed(1));
 
-      window.effects.scaleChangeHandler();
+      window.effects.scaleChange();
       if (window.pictureEffect === 'none') {
         effectLevel.classList.add('hidden');
       } else {
@@ -65,7 +65,7 @@
       depth.style = 'width:' + effectLineWidth + 'px';
       imagePreview.style = 'transform: scale(1)';
     },
-    scaleChangeHandler: function () {
+    scaleChange: function () {
       var scale = 100;
       scaleValue.value = DEFAULT_SCALE_VALUE;
       var scaleSumm;
@@ -90,15 +90,11 @@
       scaleSmaller.addEventListener('click', setScaleSmallerHandler);
       scaleBigger.addEventListener('click', setScaleBiggerHandler);
     },
-    resetScaleHandler: function () {
-      scaleSmaller.removeEventListener('click', window.setScaleSmallerHandler);
-      scaleBigger.removeEventListener('click', window.setScaleBiggerHandler);
-    },
-    scrollEffectChangeHandler: function () {
+    scrollEffectChange: function () {
 
       window.setChangeEffectList = function (evt) {
         window.pictureEffect = evt.target.value;
-        window.effects.effectChangeHandler(100);
+        window.effects.effectChange(100);
         effectLineWidth = document.querySelector('.effect-level__line').offsetWidth;
         effectLevelPin.style = 'left:' + effectLineWidth + 'px';
         depth.style = 'width:' + effectLineWidth + 'px';
@@ -124,7 +120,7 @@
           depth.style.width = scrollPosition + 'px';
           scrollPosition = scrollPosition * 100 / effectLineWidth;
           effectLevelPin.value = scrollPosition;
-          return window.effects.effectChangeHandler(scrollPosition);
+          return window.effects.effectChange(scrollPosition);
         };
 
         var onMouseUpChangeHandler = function (upEvt) {
@@ -140,7 +136,7 @@
       effectList.addEventListener('change', window.setChangeEffectList);
       effectLevelPin.addEventListener('mousedown', window.setMouseDownChangeHandler);
     },
-    resetMouseDownChangeHandler: function () {
+    resetMouseDownChange: function () {
       effectList.removeEventListener('change', window.setChangeEffectList);
       effectLevelPin.removeEventListener('mousedown', window.setMouseDownChangeHandler);
     }

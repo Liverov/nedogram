@@ -13,10 +13,10 @@
 
     xhr.addEventListener('load', function submitFormHandler() {
       if (xhr.status === 200) {
-        window.uploadPicture.removeEventsHandler();
+        window.uploadPicture.removeEvents();
         window.modalForm.showSuccessMessage();
       } else {
-        window.uploadPicture.removeEventsHandler();
+        window.uploadPicture.removeEvents();
         window.modalForm.showErrorMessage();
         throw Error('Ошибка: ' + xhr.status + ' - ' + xhr.statusText);
       }
