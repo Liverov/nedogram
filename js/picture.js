@@ -68,7 +68,13 @@
       var partComments = 0;
       var currentCommentsCount = bigPictureCommentCurrentCounter.textContent;
 
-      bigPictureCommentCurrentCounter.textContent = (currentCommentsCount > newCommentsArrays.length) ? bigPictureCommentCurrentCounter.text : DEFAULT_COMMENTS_COUNT;
+      if (currentCommentsCount > newCommentsArrays.length) {
+        bigPictureCommentCurrentCounter.textContent = newCommentsArrays.length;
+      } else {
+        bigPictureCommentCurrentCounter.textContent = DEFAULT_COMMENTS_COUNT;
+      }
+
+      bigPictureCommentCurrentCounter.textContent = (currentCommentsCount > newCommentsArrays.length) ? newCommentsArrays.length : DEFAULT_COMMENTS_COUNT;
 
       window.getCommentsHandler = function (evt) {
         var fragment = document.createDocumentFragment();
