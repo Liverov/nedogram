@@ -10,7 +10,9 @@
       imgFilters.classList.remove('img-filters--inactive');
     },
     randomfilterHandler: function () {
-      var randomPhotoArrays = window.photosArrays.sort(() => 0.5 - Math.random()).slice(0, RANDOM_PHOTOS_COUNT);
+      var randomPhotoArrays = window.photosArrays.sort(function () {
+        return 0.5 - Math.random();
+      }).slice(0, RANDOM_PHOTOS_COUNT);
       window.picture.updateHandler(randomPhotoArrays, true);
     },
     mostCommentedfilterHandler: function () {
