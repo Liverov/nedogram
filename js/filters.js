@@ -13,14 +13,14 @@
       var randomPhotoArrays = window.photosGroup.sort(function () {
         return 0.5 - Math.random();
       }).slice(0, RANDOM_PHOTOS_COUNT);
-      window.picture.updateHandler(randomPhotoArrays, true);
+      window.picture.updateData(randomPhotoArrays, true);
     },
     mostCommentedfilter: function () {
       var mostCommentedPhotos = window.photosGroup.slice();
       mostCommentedPhotos.sort(function (a, b) {
         return b.comments.length - a.comments.length;
       });
-      window.picture.updateHandler(mostCommentedPhotos, true);
+      window.picture.updateData(mostCommentedPhotos, true);
     }
   };
 
