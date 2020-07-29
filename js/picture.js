@@ -5,7 +5,7 @@
 
   var pictureTemplate = document.querySelector('#picture').content;
 
-  window.photosGroups = [];
+  window.photoGroups = [];
   var closeBigPhotoHandler = function () {
     window.bigPicture.classList.add('hidden');
     window.picture.resetBigPhoto();
@@ -20,8 +20,8 @@
 
   window.picture = {
     successData: function (responseData) {
-      window.photosGroups = responseData;
-      window.picture.updateData(window.photosGroups);
+      window.photoGroups = responseData;
+      window.picture.updateData(window.photoGroups);
     },
     updateData: function (newData, resetData) {
       if (resetData) {
@@ -97,14 +97,14 @@
       document.addEventListener('keydown', closeEscBigPhotoHandler);
       window.bigPictureCancel.addEventListener('click', closeBigPhotoHandler);
     },
-    renderPreview: function (photosGroups) {
+    renderPreview: function (photoGroups) {
       var pictures = document.querySelector('.pictures');
       var fragment = document.createDocumentFragment();
-      for (var i = 0; i < photosGroups.length; i++) {
-        fragment.appendChild(window.picture.renderPhotos(photosGroups[i]));
+      for (var i = 0; i < photoGroups.length; i++) {
+        fragment.appendChild(window.picture.renderPhotos(photoGroups[i]));
       }
       pictures.appendChild(fragment);
-      window.preview.getThumbnailLink(photosGroups);
+      window.preview.getThumbnailLink(photoGroups);
     },
     resetPhotos: function () {
       var pictures = document.querySelector('.pictures');

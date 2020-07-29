@@ -22,7 +22,7 @@
       uploadFile.value = '';
       uploadCancel.removeEventListener('click', window.uploadPicture.removeEvents);
       document.querySelector('#upload-select-image').reset();
-      window.checkForm.removeFormEvents();
+      window.checkForm.removeFormHandlers();
       window.effects.resetFilters();
       var bodyElement = document.querySelector('body');
       bodyElement.removeAttribute('class');
@@ -38,8 +38,8 @@
       effectLevel.classList.add('hidden');
       window.uploadPicture.uploadPicturePreview();
       window.effects.scrollEffectChange();
-      window.checkForm.inputFormEvents();
-      window.checkForm.addFocusBlur();
+      window.checkForm.inputFormHandlers();
+      window.checkForm.addFocusBlurHandlers();
       window.effects.scaleChange();
       document.addEventListener('keydown', window.uploadPicture.removeEvents);
       uploadCancel.addEventListener('click', window.uploadPicture.removeEvents);
