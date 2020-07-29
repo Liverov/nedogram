@@ -70,18 +70,18 @@
         }
       }
     },
-    inputFormEvents: function () {
+    inputFormHandlers: function () {
       uploadHashTagsField.addEventListener('input', window.checkForm.checkHashTags);
       uploadCommentField.addEventListener('input', window.checkForm.checkComments);
       photoCommentField.addEventListener('input', window.checkForm.checkComments);
     },
-    addFocusBlur: function () {
+    addFocusBlurHandlers: function () {
       uploadHashTagsField.addEventListener('focus', focusInputHandler);
       uploadHashTagsField.addEventListener('blur', blurInputHandler);
       uploadCommentField.addEventListener('focus', focusInputHandler);
       uploadCommentField.addEventListener('blur', blurInputHandler);
     },
-    removeFormEvents: function () {
+    removeFormHandlers: function () {
       uploadHashTagsField.removeAttribute('style');
       uploadHashTagsField.setCustomValidity('');
       uploadHashTagsField.removeEventListener('focus', focusInputHandler);

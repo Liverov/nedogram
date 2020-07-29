@@ -3,7 +3,8 @@
 (function () {
   var SCALE_STEP = 25;
   var DEFAULT_SCALE_VALUE = '100%';
-
+  var DEFAULT_SCALE_SIZE = 100;
+  var EFFECT_LINE_WIDTH = 435;
   var EFFECT_MIN = 0;
   var EFFECT_MAX = 100;
   var CHROME_MAX = 1;
@@ -27,40 +28,41 @@
   var effectLevelValue = document.querySelector('.effect-level__value');
   var effectRadioButtons = effectList.querySelectorAll('.effects__radio');
   var startScroll;
+  var imageStyle = imagePreview.style;
 
   window.effects = {
     effectChange: function () {
       var value = +effectLevelPin.style.left.replace('px', '');
-      effectLevelValue.setAttribute('value', (value * 100 / 453).toFixed(0));
+      effectLevelValue.setAttribute('value', (value * 100 / EFFECT_LINE_WIDTH).toFixed(0));
       window.effects.scaleChange();
       var getEffectValue = function (effectMin, effectMax) {
         return ((effectLevelValue.value * (effectMax - effectMin) / 100) + effectMin);
       };
 
       if (effectRadioButtons[1].checked) {
-        imagePreview.style.filter = 'grayscale(' + getEffectValue(EFFECT_MIN, CHROME_MAX) + ')';
+        imageStyle.filter = 'grayscale(' + getEffectValue(EFFECT_MIN, CHROME_MAX) + ')';
       } else if (effectRadioButtons[2].checked) {
-        imagePreview.style.filter = 'sepia(' + getEffectValue(EFFECT_MIN, SEPIA_MAX) + ')';
+        imageStyle.filter = 'sepia(' + getEffectValue(EFFECT_MIN, SEPIA_MAX) + ')';
       } else if (effectRadioButtons[3].checked) {
-        imagePreview.style.filter = 'invert(' + getEffectValue(EFFECT_MIN, MARVIN_MAX) + '%)';
+        imageStyle.filter = 'invert(' + getEffectValue(EFFECT_MIN, MARVIN_MAX) + '%)';
       } else if (effectRadioButtons[4].checked) {
-        imagePreview.style.filter = 'blur(' + getEffectValue(EFFECT_MIN, PHOBOS_MAX) + 'px)';
+        imageStyle.filter = 'blur(' + getEffectValue(EFFECT_MIN, PHOBOS_MAX) + 'px)';
       } else if (effectRadioButtons[5].checked) {
-        imagePreview.style.filter = 'brightness(' + getEffectValue(HEAT_MIN, HEAT_MAX) + ')';
+        imageStyle.filter = 'brightness(' + getEffectValue(HEAT_MIN, HEAT_MAX) + ')';
       } else {
         effectLevel.classList.add('hidden');
         imagePreview.removeAttribute('style');
       }
     },
     scaleChange: function () {
-      var scale = 100;
+      var scale = DEFAULT_SCALE_SIZE;
       scaleValue.value = DEFAULT_SCALE_VALUE;
       var scaleSumm;
       var setScaleSmallerHandler = function () {
         if (scale - SCALE_STEP >= SCALE_STEP) {
           scale -= SCALE_STEP;
           scaleSumm = scale / 100;
-          imagePreview.style = 'transform: scale(' + scaleSumm + ')';
+          imageStyle.transform = 'scale(' + scaleSumm + ')';
           scaleValue.value = scale + '%';
         }
       };
@@ -69,7 +71,7 @@
         if (scale < 100) {
           scale += SCALE_STEP;
           scaleSumm = scale / 100;
-          imagePreview.style = 'transform: scale(' + scaleSumm + ')';
+          imageStyle.transform = 'scale(' + scaleSumm + ')';
           scaleValue.value = scale + '%';
         }
       };
@@ -97,7 +99,7 @@
       var setMouseDownChangeHandler = function (evt) {
         evt.preventDefault();
         var effectLineWidth = document.querySelector('.effect-level__line').offsetWidth;
-        var onMouseMoveChangeHandler = function (moveEvt) {
+        var onMouseMoveChange = function (moveEvt) {
           var moveScroll = startScroll - moveEvt.clientX;
           startScroll = moveEvt.clientX;
           var scrollPosition = effectLevelPin.offsetLeft - moveScroll;
@@ -118,11 +120,11 @@
 
         var onMouseUpChangeHandler = function (upEvt) {
           upEvt.preventDefault();
-          document.removeEventListener('mousemove', onMouseMoveChangeHandler);
+          document.removeEventListener('mousemove', onMouseMoveChange);
           document.removeEventListener('mouseup', onMouseUpChangeHandler);
         };
 
-        document.addEventListener('mousemove', onMouseMoveChangeHandler);
+        document.addEventListener('mousemove', onMouseMoveChange);
         document.addEventListener('mouseup', onMouseUpChangeHandler);
       };
 

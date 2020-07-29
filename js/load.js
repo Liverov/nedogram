@@ -25,7 +25,7 @@
       case StatusCode.OK:
         var responseData = xhr.response;
         window.picture.successData(responseData);
-        window.filters.showFilterBarOnPage();
+        window.sort.showFilterBarOnPage();
         break;
 
       case StatusCode.BAD_REQUEST:
