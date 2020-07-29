@@ -23,8 +23,7 @@
       uploadCancel.removeEventListener('click', window.uploadPicture.removeEvents);
       document.querySelector('#upload-select-image').reset();
       window.checkForm.removeFormEvents();
-      window.effects.resetSlider();
-      window.effects.resetMouseDownChange();
+      window.effects.resetFilters();
       var bodyElement = document.querySelector('body');
       bodyElement.removeAttribute('class');
     },

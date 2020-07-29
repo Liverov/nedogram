@@ -38,19 +38,24 @@
         var hashTags = hashTag.split(' ');
         var hashTagslowerCase = [];
         var hashTagErrorMessage = '';
+
         for (var i = 0; i < hashTags.length; i++) {
-          hashTagslowerCase.push(hashTags[i].toLowerCase());
-          if (!hashTagRegExp.test(hashTagslowerCase[i])) {
-            hashTagErrorMessage += 'Строка после решётки должна состоять из букв и чисел. ';
-          }
-          if (hashTagslowerCase[i].length > MAX_HASHTAG_LENGTH || hashTagslowerCase[i].length < MIN_HASHTAG_LENGTH) {
-            hashTagErrorMessage += 'Максимальная длина одного хэш-тега 20 символов, включая решётку и не менее 2 символов. ';
-          }
-          if (!(hashTagslowerCase.indexOf(hashTagslowerCase[i]) === hashTagslowerCase.lastIndexOf(hashTagslowerCase[i]))) {
-            hashTagErrorMessage += 'Один и тот же хэш-тег не может быть использован дважды. ';
-          }
-          if (hashTagslowerCase.length > MAX_HASHTAGS) {
-            hashTagErrorMessage += 'Нельзя указать больше пяти хэш-тегов. ';
+          if (hashTags[i] !== '') {
+            hashTagslowerCase.push(hashTags[i].toLowerCase());
+            if (!hashTagRegExp.test(hashTagslowerCase[i])) {
+              hashTagErrorMessage += 'Строка после решётки должна состоять из букв и чисел. ';
+            }
+            if (hashTagslowerCase[i].length > MAX_HASHTAG_LENGTH || hashTagslowerCase[i].length < MIN_HASHTAG_LENGTH) {
+              hashTagErrorMessage += 'Максимальная длина одного хэш-тега 20 символов, включая решётку и не менее 2 символов. ';
+            }
+            if (!(hashTagslowerCase.indexOf(hashTagslowerCase[i]) === hashTagslowerCase.lastIndexOf(hashTagslowerCase[i]))) {
+              hashTagErrorMessage += 'Один и тот же хэш-тег не может быть использован дважды. ';
+            }
+            if (hashTagslowerCase.length > MAX_HASHTAGS) {
+              hashTagErrorMessage += 'Нельзя указать больше пяти хэш-тегов. ';
+            }
+          } else {
+            uploadHashTagsField.removeAttribute('style');
           }
         }
 
@@ -77,6 +82,8 @@
       uploadCommentField.addEventListener('blur', blurInputHandler);
     },
     removeFormEvents: function () {
+      uploadHashTagsField.removeAttribute('style');
+      uploadHashTagsField.setCustomValidity('');
       uploadHashTagsField.removeEventListener('focus', focusInputHandler);
       uploadHashTagsField.removeEventListener('blur', blurInputHandler);
       uploadCommentField.removeEventListener('focus', focusInputHandler);
