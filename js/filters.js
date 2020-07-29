@@ -2,6 +2,7 @@
 
 (function () {
   var RANDOM_PHOTOS_COUNT = 10;
+
   var imgFilters = document.querySelector('.img-filters');
   var buttonFilters = document.querySelectorAll('.img-filters__button');
 
@@ -10,9 +11,10 @@
       imgFilters.classList.remove('img-filters--inactive');
     },
     randomfilter: function () {
-      var randomPhotoArrays = window.photosGroup.sort(function () {
+      var randomPhotoArrays = window.photosGroup.slice(0, RANDOM_PHOTOS_COUNT);
+      randomPhotoArrays.sort(function () {
         return 0.5 - Math.random();
-      }).slice(0, RANDOM_PHOTOS_COUNT);
+      });
       window.picture.updateData(randomPhotoArrays, true);
     },
     mostCommentedfilter: function () {
@@ -27,7 +29,7 @@
   var changeFilter = function (evt) {
     switch (evt.target.id) {
       case 'filter-default':
-        window.picture.renderPreview(window.photosGroup, true);
+        window.picture.updateData(window.photosGroup, true);
         break;
       case 'filter-random':
         window.filters.randomfilter();

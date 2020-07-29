@@ -1,20 +1,22 @@
 'use strict';
 
 (function () {
+  var pictures;
+
   window.preview = {
     openBigPicture: function (element, data) {
-      window.renderBigPictureEventsHandler = function () {
+      var renderBigPictureEventsHandler = function () {
         var bigPicture = document.querySelector('.big-picture');
         bigPicture.classList.remove('hidden');
         window.picture.renderBigPhoto(data);
         window.checkForm.inputFormEvents();
       };
-      element.addEventListener('click', window.renderBigPictureEventsHandler);
-      element.addEventListener('keydown', window.renderBigPictureEventsHandler);
+      element.addEventListener('click', renderBigPictureEventsHandler);
+      element.addEventListener('keydown', renderBigPictureEventsHandler);
     },
     getThumbnailLink: function (responseData) {
-      window.pictures = document.querySelector('.pictures');
-      var thumbnails = window.pictures.querySelectorAll('.picture');
+      pictures = document.querySelector('.pictures');
+      var thumbnails = pictures.querySelectorAll('.picture');
       for (var i = 0; i < thumbnails.length; i++) {
         window.preview.openBigPicture(thumbnails[i], responseData[i]);
       }
