@@ -11,7 +11,7 @@
   var photoCommentField = document.querySelector('.social__footer-text');
 
   window.checkForm = {
-    checkComments: function (inputField) {
+    checkCommentsHandler: function (inputField) {
       if (inputField.target.className === 'text__description') {
         inputField = uploadCommentField;
       } else if (inputField.target.className === 'social__footer-text') {
@@ -31,7 +31,7 @@
         }
       }
     },
-    checkHashTags: function (evt) {
+    checkHashTagsHandler: function (evt) {
       if (evt.target.classList.contains('text__hashtags')) {
         var hashTagRegExp = /^#[a-zа-яA-ZА-Я0-9]{1,19}$/;
         var hashTag = uploadHashTagsField.value.trim();
@@ -70,27 +70,27 @@
         }
       }
     },
-    inputFormEvents: function () {
-      uploadHashTagsField.addEventListener('input', window.checkForm.checkHashTags);
-      uploadCommentField.addEventListener('input', window.checkForm.checkComments);
-      photoCommentField.addEventListener('input', window.checkForm.checkComments);
+    inputFormHandlers: function () {
+      uploadHashTagsField.addEventListener('input', window.checkForm.checkHashTagsHandler);
+      uploadCommentField.addEventListener('input', window.checkForm.checkCommentsHandler);
+      photoCommentField.addEventListener('input', window.checkForm.checkCommentsHandler);
     },
-    addFocusBlur: function () {
+    addFocusBlurHandlers: function () {
       uploadHashTagsField.addEventListener('focus', focusInputHandler);
       uploadHashTagsField.addEventListener('blur', blurInputHandler);
       uploadCommentField.addEventListener('focus', focusInputHandler);
       uploadCommentField.addEventListener('blur', blurInputHandler);
     },
-    removeFormEvents: function () {
+    removeFormHandlers: function () {
       uploadHashTagsField.removeAttribute('style');
       uploadHashTagsField.setCustomValidity('');
       uploadHashTagsField.removeEventListener('focus', focusInputHandler);
       uploadHashTagsField.removeEventListener('blur', blurInputHandler);
       uploadCommentField.removeEventListener('focus', focusInputHandler);
       uploadCommentField.removeEventListener('blur', blurInputHandler);
-      uploadHashTagsField.removeEventListener('input', window.checkForm.checkHashTags);
-      uploadCommentField.removeEventListener('input', window.checkForm.checkComments);
-      photoCommentField.removeEventListener('input', window.checkForm.checkComments);
+      uploadHashTagsField.removeEventListener('input', window.checkForm.checkHashTagsHandler);
+      uploadCommentField.removeEventListener('input', window.checkForm.checkCommentsHandler);
+      photoCommentField.removeEventListener('input', window.checkForm.checkCommentsHandler);
     }
   };
 

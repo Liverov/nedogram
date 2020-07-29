@@ -6,19 +6,19 @@
   var imgFilters = document.querySelector('.img-filters');
   var buttonFilters = document.querySelectorAll('.img-filters__button');
 
-  window.filters = {
+  window.sort = {
     showFilterBarOnPage: function () {
       imgFilters.classList.remove('img-filters--inactive');
     },
     randomfilter: function () {
-      var randomPhotoArrays = window.photosGroup.slice(0, RANDOM_PHOTOS_COUNT);
-      randomPhotoArrays.sort(function () {
+      var randomPhotos = window.photoGroups.slice();
+      randomPhotos.sort(function () {
         return 0.5 - Math.random();
-      });
-      window.picture.updateData(randomPhotoArrays, true);
+      }).slice(0, RANDOM_PHOTOS_COUNT);
+      window.picture.updateData(randomPhotos, true);
     },
     mostCommentedfilter: function () {
-      var mostCommentedPhotos = window.photosGroup.slice();
+      var mostCommentedPhotos = window.photoGroups.slice();
       mostCommentedPhotos.sort(function (a, b) {
         return b.comments.length - a.comments.length;
       });
@@ -29,13 +29,13 @@
   var changeFilter = function (evt) {
     switch (evt.target.id) {
       case 'filter-default':
-        window.picture.updateData(window.photosGroup, true);
+        window.picture.updateData(window.photoGroups, true);
         break;
       case 'filter-random':
-        window.filters.randomfilter();
+        window.sort.randomfilter();
         break;
       case 'filter-discussed':
-        window.filters.mostCommentedfilter();
+        window.sort.mostCommentedfilter();
         break;
     }
     for (var j = 0; j < buttonFilters.length; j++) {
